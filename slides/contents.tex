@@ -1,11 +1,250 @@
-\begin{frame}[fragile]{Titel}
-\begin{itemize}
-\item Stichpunkt
-\item Stichpunkt
-\item Stichpunkt
-\end{itemize}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Bekannte funktionale Sprachen}
+x
 \end{frame}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Warum eigentlich \glqq{}funktional\grqq{}?}
+
+\begin{center}
+\Large
+Funktionen sind \glqq{}first order citizens\grqq{}
+\end{center}
+
+\vspace{2em}
+
+\begin{center}
+Mit Funktionen kann man dasselbe machen wie mit Strings oder Zahlen
+\end{center}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Funktionen können Variablen zugewiesen werden}
+
+\begin{lstlisting}{Haskell}
+var times = function (x, y) { return x * y; }
+
+expect(times(3, 5)).toEqual(15);
+\end{lstlisting}
+
+\begin{lstlisting}{Haskell}
+times (x, y) = x * y
+
+times (3,5) == 15
+\end{lstlisting}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Funktionen können als Funktionsparameter übergeben werden}
+
+\begin{lstlisting}{javascript}
+var apply = function (func, arg) { return func(arg); }
+
+var times3 = function (y) { return 3 * y; };
+
+expect(apply(times3, 5)).toEqual(15);
+\end{lstlisting}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Funktionen können von Funktionen zurückgegeben werden}
+
+\begin{lstlisting}{javascript}
+var times = function (x) { return function (y) { return x * y; }; }
+
+expect(times(3)(5)).toEqual(15);
+\end{lstlisting}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Komisch, oder?}
+
+\begin{lstlisting}{javascript}
+var times = function (x, y) { return x * y; }
+expect(times(3, 5)).toEqual(15);
+
+var times = function (x) { return function (y) { return x * y; }; }
+expect(times(3)(5)).toEqual(15);
+\end{lstlisting}
+
+currying
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Noch mehr lustige Dinge}
+
+\begin{lstlisting}{javascript}
+\end{lstlisting}
+
+closures
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Und wenn ich nichts zurückgeben will?}
+
+\begin{lstlisting}{javascript}
+\end{lstlisting}
+
+Unit
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Wichtige Bibliotheksfunktionen: filter}
+\begin{itemize}
+\item filter oder auch select
+\item Nimmt eine Collection und eine Funktion
+\item Liefert diejenigen Elemente der Collection, für die die Funktion \texttt{true} ergibt
+\end{itemize}
+
+Beispiel in JavaScript:
+\begin{lstlisting}{javascript}
+var result = _.filter([1, 2, 3, 4], function (x) { return x % 2 === 0; });
+    
+expect(result).toEqual([2, 4]);
+\end{lstlisting}
+\vfill
+(mit freundlicher Unterstützung der lodash-Bibliothek)
+\end{frame}
+
+% find oder detect
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Wichtige Bibliotheksfunktionen: map}
+\begin{itemize}
+\item map oder auch collect
+\item Nimmt eine Collection und eine Funktion
+\item Liefert eine Collection, in der die Funktion auf jedes Element der ursprünglichen Collection angewandt wurde
+\end{itemize}
+
+Beispiel in JavaScript:
+\begin{lstlisting}{javascript}
+var result = _.map( [1, 2, 3, 4], function (x) { return x + 5; } );
+
+expect(result).toEqual([6, 7, 8, 9]);
+\end{lstlisting}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Wichtige Bibliotheksfunktionen: fold}
+\begin{itemize}
+\item fold oder auch reduce oder inject
+\item Nimmt eine Collection und eine Funktion
+\item Verbindet zwei Elemente der Collection mit Hilfe der Funktion zu einem Element
+\item Verbindet das Ergebnis mit dem nächsten Element der Collection zu einem Element
+\item Setzt dies für alle Elemente der Collection fort, bis nur noch ein Element übrigbleibt
+\end{itemize}
+
+Beispiel in JavaScript:
+\begin{lstlisting}{javascript}
+var result = _.foldl( [1, 2, 3, 4], function (x, y) { return x * y; } );
+
+expect(result).toEqual(24);
+\end{lstlisting}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Eine einfache Berechnung}
+
+\[
+summe = \sum_{i=1}^{10}i^2
+\]
+
+\vspace{5em}
+
+\begin{lstlisting}{java}
+int summe = 0;
+for(int i = 1; i <= 10; i++) {
+  summe = summe + i * i;
+}
+\end{lstlisting}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Exkurs: Clean Code}
+Single Responsibility Principle
+\\[2em]
+
+Wie viele Verantwortlichkeiten hat dieser Code?
+\begin{lstlisting}{java}
+int summe = 0;
+for(int i = 1; i <= 10; i++) {
+  summe = summe + i * i;
+}
+\end{lstlisting}
+
+\begin{itemize}
+\item Erzeugen der Zahlenfolge von 1 bis 10
+\item Quadrieren einer Zahl
+\item Berechnen der Quadratzahl jeder Zahl in der Folge
+\item Addieren zweier Zahlen
+\item Aufsummieren der Quadratzahlen
+\end{itemize}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Trennen der Verantwortlichkeiten}
+\begin{lstlisting}{javascript}
+var zahlenfolge = _.range(1, 11);
+
+var quadriere = function (i) { return i * i; };
+
+var quadrierteFolge = _.map(zahlenfolge, quadriere)
+
+var addiere = function (summe, summand) { return summe + summand; };
+
+var summe = _.reduce(quadrierteFolge, addiere);
+\end{lstlisting}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Zusammensetzen der Komponenten}
+\begin{lstlisting}{javascript}
+var quadriere = function (i) { return i * i; };
+var addiere = function (summe, summand) { return summe + summand; };
+\end{lstlisting}
+
+\begin{lstlisting}{javascript}
+var summe = _.reduce(_.map(_.range(1, 11), quadriere), addiere);
+\end{lstlisting}
+
+oder
+
+\begin{lstlisting}{javascript}
+var summe = _(1).range(11).map(quadriere).reduce(addiere);
+\end{lstlisting}
+
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Zweites Standbein: Rekursion}
+von Funktionen
+
+von Datentypen
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Rekursive Funktionen}
+x
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Rekursive Datentypen}
+x
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Pattern Matching}
+x
+\end{frame}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
