@@ -1,23 +1,43 @@
 
 describe("Funktionen sind first-order citizens", function () {
   it("Funktionen können Variablen zugewiesen werden", function (){
-    var times = function (x, y) { return x * y; }
+    function times(x, y) { return x * y; }
+    var timesVar = times;
 
-    expect(times(3, 5)).toEqual(15);
+    expect(timesVar(3, 5)).toEqual(15);
   });
 
   it("Funktionen können als Funktionsparameter übergeben werden", function (){
-    var apply = function (func, arg) { return func(arg); }
+    function apply(func, arg) { return func(arg); }
 
-    var times3 = function (y) { return 3 * y; };
+    function times3(y) { return 3 * y; };
 
     expect(apply(times3, 5)).toEqual(15);
   });
 
   it("Funktionen können von Funktionen zurückgegeben werden", function (){
-    var times = function (x) { return function (y) { return x * y; }; }
+    function times(x) { return function (y) { return x * y; }; }
 
     expect(times(3)(5)).toEqual(15);
+  });
+});
+
+describe("Closures", function (){
+  it("Wirkungsweise", function () {
+    function neueClosure(zahl) {
+      var zaehler = zahl;
+      return function (inkrement) {
+        zaehler += inkrement;
+        return zaehler;
+      }
+    }
+
+    var closure1 = neueClosure(10);
+    var closure2 = neueClosure(20);
+    expect(closure1(5)).toEqual(15);
+    expect(closure2(5)).toEqual(25);
+    expect(closure1(5)).toEqual(20);
+    expect(closure2(5)).toEqual(30);
   });
 });
 

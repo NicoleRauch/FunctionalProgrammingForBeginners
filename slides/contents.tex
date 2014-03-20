@@ -1,11 +1,30 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]{Bekannte funktionale Sprachen}
-x
+\begin{tikzpicture}
+\draw (1.5, 1.5) node {Lisp};
+\draw (1.5, 5.5) node {Scheme};
+\draw (4.2, 4.9) node {ML};
+\draw (10.5, 3.5) node {OCaml};
+\draw (1.5, 3.5) node {Miranda};
+\draw (7.3, 4.6) node {F\#};
+\draw (9.3, 5.3) node {Clojure};
+\draw (4.5, 1.5) node {Scala};
+
+\onslide+<1-2>
+\draw (5.5, 3.0) node {Haskell};
+\onslide+<2>
+\draw (8.5, 1.3) node {(JavaScript)};
+\onslide+<3>
+\draw (5.5, 3.0) node {\color{red}Haskell};
+\draw (8.5, 1.3) node {\color{red}(JavaScript)};
+\end{tikzpicture}
+
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]{Warum eigentlich \glqq{}funktional\grqq{}?}
 
+\onslide+<2->
 \begin{center}
 \Large
 Funktionen sind \glqq{}first order citizens\grqq{}
@@ -13,6 +32,7 @@ Funktionen sind \glqq{}first order citizens\grqq{}
 
 \vspace{2em}
 
+\onslide+<3->
 \begin{center}
 Mit Funktionen kann man dasselbe machen wie mit Strings oder Zahlen
 \end{center}
@@ -21,93 +41,191 @@ Mit Funktionen kann man dasselbe machen wie mit Strings oder Zahlen
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]{Funktionen können Variablen zugewiesen werden}
+\onslide+<2->
+JavaScript:
+\begin{lstlisting}{JavaScript}
+function times(x, y) { return x * y; }
 
-\begin{lstlisting}{Haskell}
-var times = function (x, y) { return x * y; }
-
-expect(times(3, 5)).toEqual(15);
+var timesVar = times;
+    
+expect(timesVar(3, 5)).toEqual(15);
 \end{lstlisting}
 
+\onslide+<3->
+Haskell:
 \begin{lstlisting}{Haskell}
-times (x, y) = x * y
+times x y = x * y
 
-times (3,5) == 15
+timesVar = times
+
+timesVar 3 5 == 15
 \end{lstlisting}
 
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]{Funktionen können als Funktionsparameter übergeben werden}
-
+\onslide+<2->
+JavaScript:
 \begin{lstlisting}{javascript}
-var apply = function (func, arg) { return func(arg); }
+function apply(func, arg) { return func(arg); }
 
-var times3 = function (y) { return 3 * y; };
+function times3(y) { return 3 * y; };
 
 expect(apply(times3, 5)).toEqual(15);
+\end{lstlisting}
+
+\onslide+<3->
+Haskell:
+\begin{lstlisting}{Haskell}
+apply func arg = func arg
+
+apply (\ x -> 3 * x) 5 == 15
 \end{lstlisting}
 
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]{Funktionen können von Funktionen zurückgegeben werden}
-
+\onslide+<2->
+JavaScript:
 \begin{lstlisting}{javascript}
-var times = function (x) { return function (y) { return x * y; }; }
+function times(x) { return function (y) { return x * y; }; }
 
 expect(times(3)(5)).toEqual(15);
+\end{lstlisting}
+
+\onslide+<2->
+Haskell:
+\begin{lstlisting}{Haskell}
+times x = (\y -> x * y)
+
+times 3 5 == 15
 \end{lstlisting}
 
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]{Komisch, oder?}
-
+JavaScript: Zwei verschiedene Aufrufe
 \begin{lstlisting}{javascript}
-var times = function (x, y) { return x * y; }
-expect(times(3, 5)).toEqual(15);
+function times(x, y) { return x * y; }
+times(3, 5) === 15;
 
-var times = function (x) { return function (y) { return x * y; }; }
-expect(times(3)(5)).toEqual(15);
+function times(x) { return function (y) { return x * y; }; }
+times(3)(5) === 15;
+\end{lstlisting}
+~\\
+Haskell: Zweimal derselbe Aufruf
+\begin{lstlisting}{Haskell}
+times x y = x * y
+times 3 5 == 15
+
+times x = (\y -> x * y)
+times 3 5 == 15
 \end{lstlisting}
 
-currying
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Noch mehr lustige Dinge}
-
-\begin{lstlisting}{javascript}
+\begin{frame}[fragile]{Currying! (oder auch Schönfinkeln)}
+\onslide+<2->
+In echten funktionalen Sprachen schreiben wir:
+\begin{lstlisting}{Haskell}
+times x y = x * y
 \end{lstlisting}
 
-closures
+und eigentlich passiert Folgendes:
+\begin{lstlisting}{Haskell}
+times x = (\y -> x * y)
+\end{lstlisting}
+
+\onslide+<3->
+Denn: Funktionen haben immer nur ein Argument
+\vfill
+\onslide+<4->
+Nutzen: Partielle Evaluierung:
+\begin{lstlisting}{Haskell}
+times x y = x * y
+
+times3 = times 3
+
+times3 5 == 15
+\end{lstlisting}
+
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Closures}
+
+\onslide+<2->
+\begin{lstlisting}{javascript}
+    function neueClosure(zahl) {
+      var zaehler = zahl;
+      return function (inkrement) {
+        zaehler += inkrement;
+        return zaehler;
+      }
+    }
+
+    var closure1 = neueClosure(10);
+    var closure2 = neueClosure(20);
+\end{lstlisting}
+\onslide+<3->
+\begin{lstlisting}{javascript}
+    expect(closure1(5)).toEqual(15);
+\end{lstlisting}
+\onslide+<4->
+\begin{lstlisting}{javascript}
+    expect(closure2(5)).toEqual(25);
+\end{lstlisting}
+\onslide+<5->
+\begin{lstlisting}{javascript}
+    expect(closure1(5)).toEqual(20);
+\end{lstlisting}
+\onslide+<6->
+\begin{lstlisting}{javascript}
+    expect(closure2(5)).toEqual(30);
+\end{lstlisting}
+
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]{Und wenn ich nichts zurückgeben will?}
-
-\begin{lstlisting}{javascript}
-\end{lstlisting}
-
-Unit
+\begin{itemize}
+\item In echten funktionalen Sprachen müssen Funktionen immer etwas zurückgeben!
+\item Was ist, wenn ich nichts habe?!
+\onslide+<2->
+\item \texttt{Unit} to the rescue!
+\onslide+<3->
+\item \texttt{Unit} ist ein Typ mit nur einem Element
+\item Das Element heißt in Haskell \texttt{()}
+\end{itemize}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]{Wichtige Bibliotheksfunktionen: filter}
 \begin{itemize}
 \item filter oder auch select
+\onslide+<2->
 \item Nimmt eine Collection und eine Funktion
 \item Liefert diejenigen Elemente der Collection, für die die Funktion \texttt{true} ergibt
 \end{itemize}
 
-Beispiel in JavaScript:
+\onslide+<3->
+JavaScript: (mit freundlicher Unterstützung der lodash-Bibliothek)
 \begin{lstlisting}{javascript}
 var result = _.filter([1, 2, 3, 4], function (x) { return x % 2 === 0; });
     
 expect(result).toEqual([2, 4]);
 \end{lstlisting}
-\vfill
-(mit freundlicher Unterstützung der lodash-Bibliothek)
+\onslide+<4->
+Haskell:
+\begin{lstlisting}{Haskell}
+filter (\x -> x `mod` 2 == 0) [1,2,3,4] == [2,4]
+\end{lstlisting}
+
 \end{frame}
 
 % find oder detect
@@ -116,15 +234,22 @@ expect(result).toEqual([2, 4]);
 \begin{frame}[fragile]{Wichtige Bibliotheksfunktionen: map}
 \begin{itemize}
 \item map oder auch collect
+\onslide+<2->
 \item Nimmt eine Collection und eine Funktion
 \item Liefert eine Collection, in der die Funktion auf jedes Element der ursprünglichen Collection angewandt wurde
 \end{itemize}
 
-Beispiel in JavaScript:
+\onslide+<3->
+JavaScript:
 \begin{lstlisting}{javascript}
 var result = _.map( [1, 2, 3, 4], function (x) { return x + 5; } );
 
 expect(result).toEqual([6, 7, 8, 9]);
+\end{lstlisting}
+\onslide+<4->
+Haskell:
+\begin{lstlisting}{Haskell}
+map (\x -> x + 5) [1,2,3,4] == [6,7,8,9]
 \end{lstlisting}
 
 \end{frame}
@@ -133,17 +258,24 @@ expect(result).toEqual([6, 7, 8, 9]);
 \begin{frame}[fragile]{Wichtige Bibliotheksfunktionen: fold}
 \begin{itemize}
 \item fold oder auch reduce oder inject
+\onslide+<2->
 \item Nimmt eine Collection und eine Funktion
 \item Verbindet zwei Elemente der Collection mit Hilfe der Funktion zu einem Element
 \item Verbindet das Ergebnis mit dem nächsten Element der Collection zu einem Element
 \item Setzt dies für alle Elemente der Collection fort, bis nur noch ein Element übrigbleibt
 \end{itemize}
 
-Beispiel in JavaScript:
+\onslide+<3->
+JavaScript:
 \begin{lstlisting}{javascript}
 var result = _.foldl( [1, 2, 3, 4], function (x, y) { return x * y; } );
 
 expect(result).toEqual(24);
+\end{lstlisting}
+\onslide+<4->
+Haskell (mit initialem Element):
+\begin{lstlisting}{Haskell}
+foldl	(*) 1 [1,2,3,4] == 24
 \end{lstlisting}
 
 \end{frame}
@@ -157,6 +289,7 @@ summe = \sum_{i=1}^{10}i^2
 
 \vspace{5em}
 
+\onslide+<2->
 \begin{lstlisting}{java}
 int summe = 0;
 for(int i = 1; i <= 10; i++) {
@@ -170,6 +303,7 @@ for(int i = 1; i <= 10; i++) {
 Single Responsibility Principle
 \\[2em]
 
+\onslide+<2->
 Wie viele Verantwortlichkeiten hat dieser Code?
 \begin{lstlisting}{java}
 int summe = 0;
@@ -178,11 +312,16 @@ for(int i = 1; i <= 10; i++) {
 }
 \end{lstlisting}
 
+\onslide+<3->
 \begin{itemize}
 \item Erzeugen der Zahlenfolge von 1 bis 10
+\onslide+<4->
 \item Quadrieren einer Zahl
+\onslide+<5->
 \item Berechnen der Quadratzahl jeder Zahl in der Folge
+\onslide+<6->
 \item Addieren zweier Zahlen
+\onslide+<7->
 \item Aufsummieren der Quadratzahlen
 \end{itemize}
 
@@ -190,21 +329,43 @@ for(int i = 1; i <= 10; i++) {
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]{Trennen der Verantwortlichkeiten}
+\begin{itemize}
+\item Erzeugen der Zahlenfolge von 1 bis 10
+\onslide+<2->
 \begin{lstlisting}{javascript}
 var zahlenfolge = _.range(1, 11);
-
+\end{lstlisting}
+\onslide+<1->
+\item Quadrieren einer Zahl
+\onslide+<3->
+\begin{lstlisting}{javascript}
 var quadriere = function (i) { return i * i; };
-
+\end{lstlisting}
+\onslide+<1->
+\item Berechnen der Quadratzahl jeder Zahl in der Folge
+\onslide+<4->
+\begin{lstlisting}{javascript}
 var quadrierteFolge = _.map(zahlenfolge, quadriere)
-
+\end{lstlisting}
+\onslide+<1->
+\item Addieren zweier Zahlen
+\onslide+<5->
+\begin{lstlisting}{javascript}
 var addiere = function (summe, summand) { return summe + summand; };
-
+\end{lstlisting}
+\onslide+<1->
+\item Aufsummieren der Quadratzahlen
+\onslide+<6->
+\begin{lstlisting}{javascript}
 var summe = _.reduce(quadrierteFolge, addiere);
 \end{lstlisting}
+\end{itemize}
+
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]{Zusammensetzen der Komponenten}
+JavaScript:
 \begin{lstlisting}{javascript}
 var quadriere = function (i) { return i * i; };
 var addiere = function (summe, summand) { return summe + summand; };
@@ -214,37 +375,88 @@ var addiere = function (summe, summand) { return summe + summand; };
 var summe = _.reduce(_.map(_.range(1, 11), quadriere), addiere);
 \end{lstlisting}
 
+\onslide+<2->
 oder
 
 \begin{lstlisting}{javascript}
 var summe = _(1).range(11).map(quadriere).reduce(addiere);
 \end{lstlisting}
 
-\end{frame}
+\onslide+<3->
+Haskell:
+\begin{lstlisting}{Haskell}
+(>.>) x f = f x
 
+[1..10] >.> map (\x -> x*x) >.> foldl (+) 0 == 385
+\end{lstlisting}
+
+\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Zweites Standbein: Rekursion}
-von Funktionen
+\begin{frame}[fragile]{Uff!}
 
-von Datentypen
+\begin{center}
+\Large
+OK, alle einmal tief durchatmen :-)
+\end{center}
 
 \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Pattern Matching}
+Fibonacci-Funktion \glqq naiv\grqq{}:
+\begin{lstlisting}{Haskell}
+fib x = if x < 2 then x else fib (x-1) + fib (x-2)
+\end{lstlisting}
+
+\onslide+<2->
+\vfill
+Fibonacci-Funktion mit Pattern Matching:
+\begin{lstlisting}{Haskell}
+fib 0 = 0
+fib 1 = 1
+fib x = fib (x-1) + fib (x-2)
+\end{lstlisting}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Algebraische Datentypen}
+Binärbaum:
+\begin{lstlisting}{Haskell}
+data Tree =
+       Node Tree Tree
+     | Leaf Int
+\end{lstlisting}
+
+\onslide+<2->
+\begin{lstlisting}{Haskell}
+myTree = Node (Node (Leaf 4) (Node (Leaf 7) (Leaf 1))) (Leaf 3)
+\end{lstlisting}
+
+\onslide+<3->
+Summenfunktion:
+\onslide+<4->
+\begin{lstlisting}{Haskell}
+treeSum	(Leaf x) = x
+\end{lstlisting}
+\onslide+<5->
+\vspace{-1.1em}
+\begin{lstlisting}{Haskell}
+treeSum (Node m n) = treeSum m + treeSum n
+\end{lstlisting}
+\onslide+<6->
+\begin{lstlisting}{Haskell}
+treeSum myTree == 15
+\end{lstlisting}
+\end{frame}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]{Rekursive Funktionen}
 x
 \end{frame}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Rekursive Datentypen}
-x
-\end{frame}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Pattern Matching}
-x
-\end{frame}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
