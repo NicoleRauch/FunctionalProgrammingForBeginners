@@ -6,7 +6,7 @@ times x y = x * y
 
 timesVar = times
 
-apply func arg = func arg
+wendeAn func arg = func arg
 
 timess x = (\y -> x * y)
 
@@ -30,12 +30,13 @@ treeSum (Node m n) = treeSum m + treeSum n
 (>.>) x f = f x
 
 tests   = timesVar 3 5 == 15
-       && apply (\x -> 3 * x) 5 == 15
+       && wendeAn (\x -> 3 * x) 5 == 15
        && timess 3 5 == 15
        && times3 5 == 15
        && filter (\x -> x `mod` 2 == 0) [1,2,3,4] == [2,4]
        && map (\x -> x + 5) [1,2,3,4] == [6,7,8,9]
-       && foldl (*) 1 [1,2,3,4] == 24
+       && foldl (*) "x" [2,3,4,5] == 120
+       && foldl (+) 0 (map (\x -> x*x) [1..10])
        && [1..10] >.> map (\x -> x*x) >.> foldl (+) 0 == 385
        && fib 7 == 13
        && fibb 7 == 13

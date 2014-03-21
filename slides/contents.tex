@@ -1,4 +1,45 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Funktional, das ist doch nur für Esoteriker?!}
+
+\onslide+<2>
+\begin{itemize}
+\item ABN AMRO Amsterdam \textcolor{gray}{\textit{Risikoanalysen Investmentbanking}}
+\item AT\&T \textcolor{gray}{\textit{Netzwerksicherheit: Verarbeitung von Internet-Missbrauchsmeldungen}}
+\item Bank of America Merril Lynch \\ \textcolor{gray}{\textit{Backend: Laden \& Transformieren von Daten}}
+\item Barclays Capital Quantitative Analytics Group \\ \textcolor{gray}{\textit{Mathem. Modellierung von Derivaten}}
+\item Bluespec, Inc. \textcolor{gray}{\textit{Modellierung \& Verifikation integrierter Schaltkreise}}
+\item Credit Suisse \textcolor{gray}{\textit{Prüfen und Bearbeiten von Spreadsheets}}
+\item Deutsche Bank Equity Proprietary Trading, Directional Credit Trading \textcolor{gray}{\textit{Gesamte Software-Infrastruktur}}
+\item Facebook \textcolor{gray}{\textit{Interne Tools}}
+\item Factis Research, Freiburg \textcolor{gray}{\textit{Mobil-Lösungen (Backend)}}
+\item fortytools gmbh \textcolor{gray}{\textit{Webbasierte Produktivitätstools - REST-Backend}}
+\item Functor AB, Stockholm \textcolor{gray}{\textit{Statische Codeanalyse}}
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Funktional, das ist doch nur für Esoteriker?!}
+\begin{itemize}
+\item Galois, Inc \textcolor{gray}{\textit{Security, Informationssicherheit, Kryptographie}}
+\item Google \textcolor{gray}{\textit{Interne Projekte}}
+\item iPwn Studios \textcolor{gray}{\textit{Spieleengine}}
+\item JanRain \textcolor{gray}{\textit{Netzwerk- und Web-Software}}
+\item MITRE \textcolor{gray}{\textit{Analyse kryptographischer Protokolle}}
+\item New York Times \textcolor{gray}{\textit{Bildverarbeitung für die New York Fashion Week}}
+\item NVIDIA \textcolor{gray}{\textit{In-House Tools}}
+\item Parallel Scientific \textcolor{gray}{\textit{Hochskalierbares Cluster-Verwaltungssystem}}
+\item Sankel Software \textcolor{gray}{\textit{CAD/CAM, Spiele, Computeranimation}}
+\item Silk, Amsterdam \textcolor{gray}{\textit{Filtern und Visualisieren großer Datenmengen}}
+\item Skedge Me \textcolor{gray}{\textit{Online-Terminvereinbarungen}}
+\item Standard Chartered \textcolor{gray}{\textit{Bankensoftware}}
+\item Starling Software, Tokio \textcolor{gray}{\textit{Automatisiertes Optionshandelssystem}}
+\item Suite Solutions \textcolor{gray}{\textit{Verwaltung technischer Dokumentationen}}
+\end{itemize}
+{\small (Quelle: \url{http://www.haskell.org/haskellwiki/Haskell_in_industry})}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]{Bekannte funktionale Sprachen}
 \begin{tikzpicture}
 \draw (1.5, 1.5) node {Lisp};
@@ -7,6 +48,7 @@
 \draw (10.5, 3.5) node {OCaml};
 \draw (1.5, 3.5) node {Miranda};
 \draw (7.3, 4.6) node {F\#};
+\draw (6.3, 5.6) node {Erlang};
 \draw (9.3, 5.3) node {Clojure};
 \draw (4.5, 1.5) node {Scala};
 
@@ -22,7 +64,7 @@
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Warum eigentlich \glqq{}funktional\grqq{}?}
+\begin{frame}[fragile]{Was ist denn daran so besonders?}
 
 \onslide+<2->
 \begin{center}
@@ -48,7 +90,7 @@ function times(x, y) { return x * y; }
 
 var timesVar = times;
     
-expect(timesVar(3, 5)).toEqual(15);
+timesVar(3, 5) === 15;
 \end{lstlisting}
 
 \onslide+<3->
@@ -68,19 +110,19 @@ timesVar 3 5 == 15
 \onslide+<2->
 JavaScript:
 \begin{lstlisting}{javascript}
-function apply(func, arg) { return func(arg); }
+function wendeAn(func, arg) { return func(arg); }
 
 function times3(y) { return 3 * y; };
 
-expect(apply(times3, 5)).toEqual(15);
+wendeAn(times3, 5) === 15;
 \end{lstlisting}
 
 \onslide+<3->
 Haskell:
 \begin{lstlisting}{Haskell}
-apply func arg = func arg
+wendeAn func arg = func arg
 
-apply (\ x -> 3 * x) 5 == 15
+wendeAn (\ x -> 3 * x) 5 == 15
 \end{lstlisting}
 
 \end{frame}
@@ -92,10 +134,10 @@ JavaScript:
 \begin{lstlisting}{javascript}
 function times(x) { return function (y) { return x * y; }; }
 
-expect(times(3)(5)).toEqual(15);
+times(3)(5) === 15;
 \end{lstlisting}
 
-\onslide+<2->
+\onslide+<3->
 Haskell:
 \begin{lstlisting}{Haskell}
 times x = (\y -> x * y)
@@ -157,49 +199,50 @@ times3 5 == 15
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Closures}
-
-\onslide+<2->
-\begin{lstlisting}{javascript}
-    function neueClosure(zahl) {
-      var zaehler = zahl;
-      return function (inkrement) {
-        zaehler += inkrement;
-        return zaehler;
-      }
-    }
-
-    var closure1 = neueClosure(10);
-    var closure2 = neueClosure(20);
-\end{lstlisting}
-\onslide+<3->
-\begin{lstlisting}{javascript}
-    expect(closure1(5)).toEqual(15);
-\end{lstlisting}
-\onslide+<4->
-\begin{lstlisting}{javascript}
-    expect(closure2(5)).toEqual(25);
-\end{lstlisting}
-\onslide+<5->
-\begin{lstlisting}{javascript}
-    expect(closure1(5)).toEqual(20);
-\end{lstlisting}
-\onslide+<6->
-\begin{lstlisting}{javascript}
-    expect(closure2(5)).toEqual(30);
-\end{lstlisting}
-
-\end{frame}
+%\begin{frame}[fragile]{Closures}
+%
+%\onslide+<2->
+%\begin{lstlisting}{javascript}
+%    function neueClosure(zahl) {
+%      var zaehler = zahl;
+%      return function (inkrement) {
+%        zaehler += inkrement;
+%        return zaehler;
+%      }
+%    }
+%
+%    var closure1 = neueClosure(10);
+%    var closure2 = neueClosure(20);
+%\end{lstlisting}
+%\onslide+<3->
+%\begin{lstlisting}{javascript}
+%    closure1(5) === 15;
+%\end{lstlisting}
+%\onslide+<4->
+%\begin{lstlisting}{javascript}
+%    closure2(5) === 25;
+%\end{lstlisting}
+%\onslide+<5->
+%\begin{lstlisting}{javascript}
+%    closure1(5) === 20;
+%\end{lstlisting}
+%\onslide+<6->
+%\begin{lstlisting}{javascript}
+%    closure2(5) === 30;
+%\end{lstlisting}
+%
+%\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Und wenn ich nichts zurückgeben will?}
+\begin{frame}[fragile]{Und wenn ich kein Argument haben will?}
 \begin{itemize}
-\item In echten funktionalen Sprachen müssen Funktionen immer etwas zurückgeben!
+\item In echten funktionalen Sprachen bekommen Funktionen immer ein Argument!
 \item Was ist, wenn ich nichts habe?!
 \onslide+<2->
 \item \texttt{Unit} to the rescue!
 \onslide+<3->
 \item \texttt{Unit} ist ein Typ mit nur einem Element
+\onslide+<4->
 \item Das Element heißt in Haskell \texttt{()}
 \end{itemize}
 \end{frame}
@@ -218,7 +261,7 @@ JavaScript: (mit freundlicher Unterstützung der lodash-Bibliothek)
 \begin{lstlisting}{javascript}
 var result = _.filter([1, 2, 3, 4], function (x) { return x % 2 === 0; });
     
-expect(result).toEqual([2, 4]);
+Ergebnis: [2, 4];
 \end{lstlisting}
 \onslide+<4->
 Haskell:
@@ -244,7 +287,7 @@ JavaScript:
 \begin{lstlisting}{javascript}
 var result = _.map( [1, 2, 3, 4], function (x) { return x + 5; } );
 
-expect(result).toEqual([6, 7, 8, 9]);
+Ergebnis: [6, 7, 8, 9];
 \end{lstlisting}
 \onslide+<4->
 Haskell:
@@ -266,19 +309,49 @@ map (\x -> x + 5) [1,2,3,4] == [6,7,8,9]
 \end{itemize}
 
 \onslide+<3->
-JavaScript:
+JavaScript: (mit oder ohne initiales Element)
 \begin{lstlisting}{javascript}
-var result = _.foldl( [1, 2, 3, 4], function (x, y) { return x * y; } );
-
-expect(result).toEqual(24);
+var result = _.foldl( [2, 3, 4, 5], function (x, y) { return x * y; } );
+var result = _.foldl( [2, 3, 4, 5], function (x, y) { return x * y; }, 1 );
+result === 120;
 \end{lstlisting}
 \onslide+<4->
-Haskell (mit initialem Element):
+Haskell (nur mit initialem Element):
 \begin{lstlisting}{Haskell}
-foldl	(*) 1 [1,2,3,4] == 24
+foldl	(*) 1 [2,3,4,5] == 120
 \end{lstlisting}
 
 \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{Typinferenz}
+\begin{itemize}
+\item Haskell: starkes statisches Typsystem
+\item Leichtgewichtige Verwendung dank Typinferenz
+\item Herleitung des allgemeinst möglichen Typs
+\end{itemize}
+
+\onslide+<2->
+\begin{lstlisting}{Haskell}
+foldl :: (a -> b -> a) -> a -> [b] -> a
+(*) :: Num a => a -> a -> a
+
+foldl	(*) 1 [2,3,4,5]
+\end{lstlisting}
+
+\vfill
+
+\onslide+<3->
+Compilerfehler für:
+\begin{lstlisting}{Haskell}
+foldl	(*) "x" [2,3,4,5]
+
+No instance for (Num [Char]) arising from a use of `*'
+Possible fix: add an instance declaration for (Num [Char])
+\end{lstlisting}
+
+\end{frame}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]{Eine einfache Berechnung}
@@ -372,21 +445,24 @@ var addiere = function (summe, summand) { return summe + summand; };
 \end{lstlisting}
 
 \begin{lstlisting}{javascript}
-var summe = _.reduce(_.map(_.range(1, 11), quadriere), addiere);
+_.reduce(_.map(_.range(1, 11), quadriere), addiere) === 385;
 \end{lstlisting}
 
 \onslide+<2->
 oder
 
 \begin{lstlisting}{javascript}
-var summe = _(1).range(11).map(quadriere).reduce(addiere);
+_(1).range(11).map(quadriere).reduce(addiere) === 385;
 \end{lstlisting}
 
 \onslide+<3->
 Haskell:
 \begin{lstlisting}{Haskell}
+foldl	(+) 0 (map (\x -> x*x) [1..10]) == 385
+\end{lstlisting}
+oder
+\begin{lstlisting}{Haskell}
 (>.>) x f = f x
-
 [1..10] >.> map (\x -> x*x) >.> foldl (+) 0 == 385
 \end{lstlisting}
 
@@ -452,8 +528,23 @@ treeSum myTree == 15
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Rekursive Funktionen}
-x
+\begin{frame}[fragile]{Fazit}
+\begin{itemize}
+\item Funktionale Programmierung ist verbreiteter als man denkt
+\item Java 8 hat funktionale Neuerungen
+\item Viele Sprachen bringen funktionale Aspekte oder Zusatzmodule mit
+\end{itemize}
+
+\vfill
+
+\onslide+<2->
+Referenzen:
+
+\begin{itemize}
+\item Funktionale JS-Bibliothek: \url{http://lodash.com}
+\item Haskell: \url{http://www.haskell.org}
+\end{itemize}
+
 \end{frame}
 
 
