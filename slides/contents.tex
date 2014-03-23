@@ -6,7 +6,7 @@
 \item ABN AMRO Amsterdam \textcolor{gray}{\textit{Risikoanalysen Investmentbanking}}
 \item AT\&T \textcolor{gray}{\textit{Netzwerksicherheit: Verarbeitung von Internet-Missbrauchsmeldungen}}
 \item Bank of America Merril Lynch \\ \textcolor{gray}{\textit{Backend: Laden \& Transformieren von Daten}}
-\item Barclays Capital Quantitative Analytics Group \\ \textcolor{gray}{\textit{Mathem. Modellierung von Derivaten}}
+\item Barclays Capital Quantitative Analytics Group \\ \textcolor{gray}{\textit{Mathematische Modellierung von Derivaten}}
 \item Bluespec, Inc. \textcolor{gray}{\textit{Modellierung \& Verifikation integrierter Schaltkreise}}
 \item Credit Suisse \textcolor{gray}{\textit{Prüfen und Bearbeiten von Spreadsheets}}
 \item Deutsche Bank Equity Proprietary Trading, Directional Credit Trading \textcolor{gray}{\textit{Gesamte Software-Infrastruktur}}
@@ -64,7 +64,7 @@
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Was ist denn daran so besonders?}
+\begin{frame}[fragile]{Was ist denn an funktionaler Programmierung so besonders?}
 
 \onslide+<2->
 \begin{center}
@@ -303,20 +303,20 @@ map (\x -> x + 5) [1,2,3,4] == [6,7,8,9]
 \item fold oder auch reduce oder inject
 \onslide+<2->
 \item Nimmt eine Collection und eine Funktion
-\item Verbindet zwei Elemente der Collection mit Hilfe der Funktion zu einem Element
+\item Verbindet Startwert und erstes Element (oder zwei Elemente) der Collection mit Hilfe der Funktion zu einem Element
 \item Verbindet das Ergebnis mit dem nächsten Element der Collection zu einem Element
 \item Setzt dies für alle Elemente der Collection fort, bis nur noch ein Element übrigbleibt
 \end{itemize}
 
 \onslide+<3->
-JavaScript: (mit oder ohne initiales Element)
+JavaScript: (mit oder ohne Startwert)
 \begin{lstlisting}{javascript}
 var result = _.foldl( [2, 3, 4, 5], function (x, y) { return x * y; } );
 var result = _.foldl( [2, 3, 4, 5], function (x, y) { return x * y; }, 1 );
 result === 120;
 \end{lstlisting}
 \onslide+<4->
-Haskell (nur mit initialem Element):
+Haskell (nur mit Startwert):
 \begin{lstlisting}{Haskell}
 foldl	(*) 1 [2,3,4,5] == 120
 \end{lstlisting}
