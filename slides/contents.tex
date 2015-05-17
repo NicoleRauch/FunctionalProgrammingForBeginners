@@ -121,9 +121,9 @@ timesVar 3 5 == 15
 \onslide+<2->
 JavaScript:
 \begin{lstlisting}{javascript}
-function wendeAn(func, arg) { return func(arg); }
-
 function times3(y) { return 3 * y; };
+
+function wendeAn(func, arg) { return func(arg); }
 
 wendeAn(times3, 5) === 15;
 \end{lstlisting}
@@ -400,7 +400,7 @@ var quadrierteFolge = _.map(zahlenfolge, quadriere)
 \item Addieren zweier Zahlen
 \onslide+<5->
 \begin{lstlisting}{javascript}
-var addiere = function (summe, summand) { return summe + summand; };
+var addiere = function (s1, s2) { return s1 + s2; };
 \end{lstlisting}
 \onslide+<1->
 \item Aufsummieren der Quadratzahlen
