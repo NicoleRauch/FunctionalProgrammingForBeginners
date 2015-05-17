@@ -210,41 +210,6 @@ times3 5 == 15
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\begin{frame}[fragile]{Closures}
-%
-%\onslide+<2->
-%\begin{lstlisting}{javascript}
-%    function neueClosure(zahl) {
-%      var zaehler = zahl;
-%      return function (inkrement) {
-%        zaehler += inkrement;
-%        return zaehler;
-%      }
-%    }
-%
-%    var closure1 = neueClosure(10);
-%    var closure2 = neueClosure(20);
-%\end{lstlisting}
-%\onslide+<3->
-%\begin{lstlisting}{javascript}
-%    closure1(5) === 15;
-%\end{lstlisting}
-%\onslide+<4->
-%\begin{lstlisting}{javascript}
-%    closure2(5) === 25;
-%\end{lstlisting}
-%\onslide+<5->
-%\begin{lstlisting}{javascript}
-%    closure1(5) === 20;
-%\end{lstlisting}
-%\onslide+<6->
-%\begin{lstlisting}{javascript}
-%    closure2(5) === 30;
-%\end{lstlisting}
-%
-%\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]{Und wenn ich kein Argument haben will?}
 \begin{itemize}
 \item In echten funktionalen Sprachen bekommen Funktionen immer ein Argument!
