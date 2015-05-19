@@ -9,12 +9,21 @@
 
 %\usefonttheme{serif}
 
+\RequirePackage{ifthen}
+\newif\ifen
+\newif\ifde
+\newcommand{\en}[1]{\ifen#1\fi}
+\newcommand{\de}[1]{\ifde#1\fi}
+
+%\detrue % Enables German Language texts
+\entrue % Enables English Language texts
+
 \AtBeginPart{\frame{\partpage}}
 
 \author{Nicole Rauch}
-\title{Jetzt funkt's!}
-\subtitle{Funktionale Programmierung für Anfänger}
-\institute{Softwareentwicklung und Entwicklungscoaching}
+\title{\de{Jetzt funkt's!}\en{Functional Programming for Beginners}}
+\subtitle{\de{Funktionale Programmierung für Anfänger}\en{~}}
+\institute{\de{Softwareentwicklung und Entwicklungscoaching}\en{Software Development and Development Coaching}}
 \date{21. Mai 2015}
 
 \usepackage{ngerman}
