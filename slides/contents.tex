@@ -212,7 +212,7 @@ times3 5 == 15
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]{Und wenn ich kein Argument haben will?}
 \begin{itemize}
-\item In echten funktionalen Sprachen bekommen Funktionen immer ein Argument!
+\item In echten funktionalen Sprachen bekommen Funktionen immer genau ein Argument!
 \item Was ist, wenn ich nichts habe?!
 \onslide+<2->
 \item \texttt{Unit} to the rescue!
@@ -235,10 +235,9 @@ times3 5 == 15
 \onslide+<3->
 JavaScript: (mit freundlicher Unterstützung der lodash-Bibliothek)
 \begin{lstlisting}{javascript}
-var result = _.filter([1, 2, 3, 4], function (x) { return x % 2 === 0; });
-    
-Ergebnis: [2, 4];
+_.filter([1, 2, 3, 4], function (x) { return x % 2 === 0; }) === [2, 4]
 \end{lstlisting}
+
 \onslide+<4->
 Haskell:
 \begin{lstlisting}{Haskell}
@@ -261,10 +260,9 @@ filter (\x -> x `mod` 2 == 0) [1,2,3,4] == [2,4]
 \onslide+<3->
 JavaScript:
 \begin{lstlisting}{javascript}
-var result = _.map( [1, 2, 3, 4], function (x) { return x + 5; } );
-
-Ergebnis: [6, 7, 8, 9];
+_.map( [1, 2, 3, 4], function (x) { return x + 5; } ) === [6, 7, 8, 9]
 \end{lstlisting}
+
 \onslide+<4->
 Haskell:
 \begin{lstlisting}{Haskell}
@@ -277,25 +275,30 @@ map (\x -> x + 5) [1,2,3,4] == [6,7,8,9]
 \begin{frame}[fragile]{Wichtige Bibliotheksfunktionen: fold}
 \begin{itemize}
 \item fold oder auch reduce oder inject
-\onslide+<2->
-\item Nimmt eine Collection und eine Funktion
-\item Verbindet Startwert und erstes Element (oder zwei Elemente) der Collection mit Hilfe der Funktion zu einem Element
-\item Verbindet das Ergebnis mit dem nächsten Element der Collection zu einem Element
+\onslide*<2>{
+\item Nimmt eine Collection, eine Funktion und einen Startwert
+\item Verbindet Startwert und erstes Element der Collection mit Hilfe der Funktion
+\item Verbindet das Ergebnis mit dem nächsten Element der Collection
 \item Setzt dies für alle Elemente der Collection fort, bis nur noch ein Element übrigbleibt
+}
 \end{itemize}
 
 \onslide+<3->
-JavaScript: (mit oder ohne Startwert)
+
+JavaScript:
 \begin{lstlisting}{javascript}
-var result = _.foldl( [2, 3, 4, 5], function (x, y) { return x * y; } );
-var result = _.foldl( [2, 3, 4, 5], function (x, y) { return x * y; }, 1 );
-result === 120;
+_.foldl( [2, 3, 4, 5], function (x, y) { return x * y; }, 1 ) === 120
 \end{lstlisting}
 \onslide+<4->
-Haskell (nur mit Startwert):
+Haskell:
 \begin{lstlisting}{Haskell}
 foldl	(*) 1 [2,3,4,5] == 120
 \end{lstlisting}
+
+\onslide+<3->
+\begin{center}
+\includegraphics[width=.7\framewidth]{fold_1.png}
+\end{center}
 
 \end{frame}
 
@@ -317,7 +320,13 @@ foldl	(*) 1 [2,3,4,5]
 
 \vfill
 
-\onslide+<3->
+\onslide*<3>{
+  \begin{center}
+    \includegraphics[width=.7\framewidth]{fold_2.png}
+  \end{center}
+}
+
+\onslide+<4->
 Compilerfehler für:
 \begin{lstlisting}{Haskell}
 foldl	(*) "x" [2,3,4,5]
@@ -485,6 +494,12 @@ data Tree =
 myTree = Node (Node (Leaf 4) (Node (Leaf 7) (Leaf 1))) (Leaf 3)
 \end{lstlisting}
 
+\onslide*<2>{
+\begin{center}
+\includegraphics[width=.3\framewidth]{tree.png}
+\end{center}
+}
+
 \onslide+<3->
 Summenfunktion:
 \onslide+<4->
@@ -528,12 +543,11 @@ Referenzen:
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 {
-\begin{frame}{}
+\begin{frame}{Vielen Dank!}
 
-        ~\\[4em]
         Code \& Folien auf GitHub:
         \begin{center}
-                \url{https://github.com/NicoleRauch/FunctionalProgrammingForBeginners}
+                \url{https://github.com} \url{/NicoleRauch/FunctionalProgrammingForBeginners}
         \end{center}
 
         ~\\[1em]
@@ -541,6 +555,7 @@ Referenzen:
         \begin{description}[Twitterxx]
                 \item[E-Mail]  \href{mailto:info@nicole-rauch.de}{\texttt{info@nicole-rauch.de}}
                 \item[Twitter] \href{http://twitter.com/NicoleRauch}{\texttt{@NicoleRauch}}
+                \item[Web] \href{http://www.nicole-rauch.de}{\texttt{http://www.nicole-rauch.de}}
         \end{description}
         \end{block}
 \end{frame}
