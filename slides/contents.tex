@@ -127,7 +127,7 @@ Immutability
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Funktionen können Variablen zugewiesen werden}
+\begin{frame}[fragile]{\de{Funktionen können Variablen zugewiesen werden}\en{Functions can be assigned to variables}}
 \onslide+<2->
 JavaScript:
 \begin{lstlisting}{JavaScript}
@@ -151,29 +151,29 @@ timesVar 3 5 == 15
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Funktionen können als Funktionsparameter übergeben werden}
+\begin{frame}[fragile]{\de{Funktionen können als Funktionsparameter übergeben werden}\en{Functions can be passed as function parameters}}
 \onslide+<2->
 JavaScript:
 \begin{lstlisting}{javascript}
 function times3(y) { return 3 * y; };
 
-function wendeAn(func, arg) { return func(arg); }
+function apply(func, arg) { return func(arg); }
 
-wendeAn(times3, 5) === 15;
+apply(times3, 5) === 15;
 \end{lstlisting}
 
 \onslide+<3->
 Haskell:
 \begin{lstlisting}{Haskell}
-wendeAn func arg = func arg
+apply func arg = func arg
 
-wendeAn (\ x -> 3 * x) 5 == 15
+apply (\ x -> 3 * x) 5 == 15
 \end{lstlisting}
 
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Funktionen können von Funktionen zurückgegeben werden}
+\begin{frame}[fragile]{\de{Funktionen können von Funktionen zurückgegeben werden}\en{Functions can be returned from functions}}
 \onslide+<2->
 JavaScript:
 \begin{lstlisting}{javascript}
