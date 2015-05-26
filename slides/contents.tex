@@ -127,7 +127,7 @@ Immutability
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{\de{Funktionen können Variablen zugewiesen werden}\en{Functions can be assigned to variables}}
+\begin{frame}[fragile]{\de{Funktionen sind Werte}\en{Functions are values}}
 \onslide+<2->
 JavaScript:
 \begin{lstlisting}{JavaScript}
@@ -151,7 +151,7 @@ timesVar 3 5 == 15
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{\de{Funktionen können als Funktionsparameter übergeben werden}\en{Functions can be passed as function parameters}}
+\begin{frame}[fragile]{\de{Funktionen sind Funktionsparameter}\en{Functions are function parameters}}
 \onslide+<2->
 JavaScript:
 \begin{lstlisting}{javascript}
@@ -173,7 +173,7 @@ apply (\ x -> 3 * x) 5 == 15
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{\de{Funktionen können von Funktionen zurückgegeben werden}\en{Functions can be returned from functions}}
+\begin{frame}[fragile]{\de{Funktionen sind Rückgabewerte}\en{Functions are return values}}
 \onslide+<2->
 JavaScript:
 \begin{lstlisting}{javascript}
@@ -193,8 +193,8 @@ times 3 5 == 15
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Komisch, oder?}
-JavaScript: Zwei verschiedene Aufrufe
+\begin{frame}[fragile]{\de{Komisch, oder?}\en{Strange... ?!}}
+JavaScript: \de{Zwei verschiedene Aufrufe}\en{Two different invocations}
 \begin{lstlisting}{javascript}
 function times(x, y) { return x * y; }
 times(3, 5) === 15;
@@ -203,7 +203,7 @@ function times(x) { return function (y) { return x * y; }; }
 times(3)(5) === 15;
 \end{lstlisting}
 ~\\
-Haskell: Zweimal derselbe Aufruf
+Haskell: \de{Zweimal derselbe Aufruf}\en{Two identical invocations}
 \begin{lstlisting}{Haskell}
 times x y = x * y
 times 3 5 == 15
@@ -215,23 +215,23 @@ times 3 5 == 15
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Currying! (oder auch Schönfinkeln)}
+\begin{frame}[fragile]{Currying! (\de{oder auch Schönfinkeln}\en{also known as Schönfinkeling})}
 \onslide+<2->
-In echten funktionalen Sprachen schreiben wir:
+\de{In echten funktionalen Sprachen schreiben wir:}\en{In real functional languages we write:}
 \begin{lstlisting}{Haskell}
 times x y = x * y
 \end{lstlisting}
 
-und eigentlich passiert Folgendes:
+\de{und eigentlich passiert Folgendes:}\en{but actually the following happens:}
 \begin{lstlisting}{Haskell}
 times x = (\y -> x * y)
 \end{lstlisting}
 
 \onslide+<3->
-Denn: Funktionen haben immer genau ein Argument
+\de{Denn: Funktionen haben immer genau ein Argument}\en{Because functions always have exactly one argument}
 \vfill
 \onslide+<4->
-Nutzen: Partielle Evaluierung:
+\de{Nutzen: Partielle Evaluierung:}\en{Useful for partial evaluation:}
 \begin{lstlisting}{Haskell}
 times x y = x * y
 
@@ -244,30 +244,30 @@ times3 5 == 15
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Und wenn ich kein Argument haben will?}
+\begin{frame}[fragile]{\de{Und wenn ich kein Argument haben will?}\en{And what if I don't want an argument?}}
 \begin{itemize}
-\item In echten funktionalen Sprachen bekommen Funktionen immer genau ein Argument!
-\item Was ist, wenn ich nichts habe?!
+\item \de{In echten funktionalen Sprachen bekommen Funktionen immer genau ein Argument!}\en{In real functional lanugages, functions always get exactly one argument!}
+\item \de{Was ist, wenn ich nichts habe?!}\en{What if I don't want to pass anything?}
 \onslide+<2->
 \item \texttt{Unit} to the rescue!
 \onslide+<3->
-\item \texttt{Unit} ist ein Typ mit nur einem Element
+\item \texttt{Unit} \de{ist ein Typ mit nur einem Element}\en{is a type with only one element}
 \onslide+<4->
-\item Das Element heißt in Haskell \texttt{()}
+\item \de{Das Element heißt in Haskell}\en{In Haskell, this element is called} \texttt{()}
 \end{itemize}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Wichtige Bibliotheksfunktionen: filter}
+\begin{frame}[fragile]{\de{Wichtige Bibliotheksfunktionen}\en{Important library functions}: filter}
 \begin{itemize}
-\item filter oder auch select
+\item filter \de{oder auch}\en{or} select
 \onslide+<2->
-\item Nimmt eine Collection und eine Funktion
-\item Liefert diejenigen Elemente der Collection, für die die Funktion \texttt{true} ergibt
+\item \de{Nimmt eine Collection und eine Funktion}\en{Takes a collection and a function}
+\item \de{Liefert diejenigen Elemente der Collection, für die die Funktion \texttt{true} ergibt}\en{Returns those elements of the collection for which the function yields \texttt{true}}
 \end{itemize}
 
 \onslide+<3->
-JavaScript: (mit freundlicher Unterstützung der lodash-Bibliothek)
+JavaScript: (\de{mit freundlicher Unterstützung der lodash-Bibliothek}\en{using the lodash-library})
 \begin{lstlisting}{javascript}
 _.filter([1, 2, 3, 4], function (x) { return x % 2 === 0; }) === [2, 4]
 \end{lstlisting}
@@ -283,12 +283,12 @@ filter (\x -> x `mod` 2 == 0) [1,2,3,4] == [2,4]
 % find oder detect
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Wichtige Bibliotheksfunktionen: map}
+\begin{frame}[fragile]{\de{Wichtige Bibliotheksfunktionen}\en{Important library functions}: map}
 \begin{itemize}
-\item map oder auch collect
+\item map \de{oder auch}\en{or} collect
 \onslide+<2->
-\item Nimmt eine Collection und eine Funktion
-\item Liefert eine Collection, in der die Funktion auf jedes Element der ursprünglichen Collection angewandt wurde
+\item \de{Nimmt eine Collection und eine Funktion}\en{Takes a collection and a function}
+\item \de{Liefert eine Collection, in der die Funktion auf jedes Element der ursprünglichen Collection angewandt wurde}\en{Yields a collection in which the function was applied to each element of the original collection}
 \end{itemize}
 
 \onslide+<3->
@@ -306,14 +306,14 @@ map (\x -> x + 5) [1,2,3,4] == [6,7,8,9]
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Wichtige Bibliotheksfunktionen: fold}
+\begin{frame}[fragile]{\de{Wichtige Bibliotheksfunktionen}\en{Important library functions}: fold}
 \begin{itemize}
-\item fold oder auch reduce oder inject
+\item fold \de{oder auch}\en{or} reduce \de{oder}\en{or} inject
 \onslide*<2>{
-\item Nimmt eine Collection, eine Funktion und einen Startwert
-\item Verbindet Startwert und erstes Element der Collection mit Hilfe der Funktion
-\item Verbindet das Ergebnis mit dem nächsten Element der Collection
-\item Setzt dies für alle Elemente der Collection fort, bis nur noch ein Element übrigbleibt
+\item \de{Nimmt eine Collection, eine Funktion und einen Startwert}\en{Takes a collection, a function and an initial value}
+\item \de{Verbindet Startwert und erstes Element der Collection mit Hilfe der Funktion}\en{Merges initial value and first collection entry using the function}
+\item \de{Verbindet das Ergebnis mit dem nächsten Element der Collection}\en{Merges the result and the next collection entry}
+\item \de{Setzt dies für alle Elemente der Collection fort, bis nur noch ein Element übrigbleibt}\en{Continues for all collection entries, yielding a single result}
 }
 \end{itemize}
 
@@ -337,11 +337,11 @@ foldl	(*) 1 [2,3,4,5] == 120
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Typinferenz}
+\begin{frame}[fragile]{\de{Typinferenz}\en{Type inference}}
 \begin{itemize}
-\item Haskell: starkes statisches Typsystem
-\item Leichtgewichtige Verwendung dank Typinferenz
-\item Herleitung des allgemeinst möglichen Typs
+\item Haskell: \de{starkes statisches Typsystem}\en{strong static type system}
+\item \de{Leichtgewichtige Verwendung dank Typinferenz}\en{Lightweight usage thanks to type inference}
+\item \de{Herleitung des allgemeinst möglichen Typs}\en{Derivation of the most general type}
 \end{itemize}
 
 \onslide+<2->
@@ -361,7 +361,7 @@ foldl	(*) 1 [2,3,4,5]
 }
 
 \onslide+<4->
-Compilerfehler für:
+\de{Compilerfehler für}\en{Compile error for}:
 \begin{lstlisting}{Haskell}
 foldl	(*) "x" [2,3,4,5]
 
@@ -373,105 +373,105 @@ Possible fix: add an instance declaration for (Num [Char])
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Eine einfache Berechnung}
+\begin{frame}[fragile]{\de{Eine einfache Berechnung}\en{A simple calculation}}
 
 \[
-summe = \sum_{i=1}^{10}i^2
+sum = \sum_{i=1}^{10}i^2
 \]
 
 \vspace{5em}
 
 \onslide+<2->
 \begin{lstlisting}{java}
-int summe = 0;
+int sum = 0;
 for(int i = 1; i <= 10; i++) {
-  summe = summe + i * i;
+  sum = sum + i * i;
 }
 \end{lstlisting}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Exkurs: Clean Code}
+\begin{frame}[fragile]{\de{Exkurs}\en{Excursion}: Clean Code}
 Single Responsibility Principle
 \\[2em]
 
 \onslide+<2->
-Wie viele Verantwortlichkeiten hat dieser Code?
+\de{Wie viele Verantwortlichkeiten hat dieser Code?}\en{How many responsibilities does this code have?}
 \begin{lstlisting}{java}
-int summe = 0;
+int sum = 0;
 for(int i = 1; i <= 10; i++) {
-  summe = summe + i * i;
+  sum = sum + i * i;
 }
 \end{lstlisting}
 
 \onslide+<3->
 \begin{itemize}
-\item Erzeugen der Zahlenfolge von 1 bis 10
+\item \de{Erzeugen der Zahlenfolge von 1 bis 10}\en{Creating the sequence of numbers from 1 to 10}
 \onslide+<4->
-\item Quadrieren einer Zahl
+\item \de{Quadrieren einer Zahl}\en{Calculating the square of a number}
 \onslide+<5->
-\item Berechnen der Quadratzahl jeder Zahl in der Folge
+\item \de{Berechnen der Quadratzahl jeder Zahl in der Folge}\en{Calculating the square of each number in the sequence}
 \onslide+<6->
-\item Addieren zweier Zahlen
+\item \de{Addieren zweier Zahlen}\en{Calculating the sum of two numbers}
 \onslide+<7->
-\item Aufsummieren der Quadratzahlen
+\item \de{Aufsummieren der Quadratzahlen}\en{Calculating the sum of all squares}
 \end{itemize}
 
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Trennen der Verantwortlichkeiten}
+\begin{frame}[fragile]{\de{Trennen der Verantwortlichkeiten}\en{Separation of Concerns}}
 \begin{itemize}
-\item Erzeugen der Zahlenfolge von 1 bis 10
+\item \de{Erzeugen der Zahlenfolge von 1 bis 10}\en{Creating the sequence of numbers from 1 to 10}
 \onslide+<2->
 \begin{lstlisting}{javascript}
-var zahlenfolge = _.range(1, 11);
+var sequence = _.range(1, 11);
 \end{lstlisting}
 \onslide+<1->
-\item Quadrieren einer Zahl
+\item \de{Quadrieren einer Zahl}\en{Calculating the square of a number}
 \onslide+<3->
 \begin{lstlisting}{javascript}
-var quadriere = function (i) { return i * i; };
+var square = function (i) { return i * i; };
 \end{lstlisting}
 \onslide+<1->
-\item Berechnen der Quadratzahl jeder Zahl in der Folge
+\item \de{Berechnen der Quadratzahl jeder Zahl in der Folge}\en{Calculating the square of each number in the sequence}
 \onslide+<4->
 \begin{lstlisting}{javascript}
-var quadrierteFolge = _.map(zahlenfolge, quadriere)
+var squaredSequence = _.map(sequence, square)
 \end{lstlisting}
 \onslide+<1->
-\item Addieren zweier Zahlen
+\item \de{Addieren zweier Zahlen}\en{Calculating the sum of two numbers}
 \onslide+<5->
 \begin{lstlisting}{javascript}
-var addiere = function (s1, s2) { return s1 + s2; };
+var add = function (s1, s2) { return s1 + s2; };
 \end{lstlisting}
 \onslide+<1->
-\item Aufsummieren der Quadratzahlen
+\item \de{Aufsummieren der Quadratzahlen}\en{Calculating the sum of all squares}
 \onslide+<6->
 \begin{lstlisting}{javascript}
-var summe = _.reduce(quadrierteFolge, addiere);
+var sum = _.reduce(squaredSequence, add);
 \end{lstlisting}
 \end{itemize}
 
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Zusammensetzen der Komponenten}
+\begin{frame}[fragile]{\de{Zusammensetzen der Komponenten}\en{Combining the components}}
 JavaScript:
 \begin{lstlisting}{javascript}
-var quadriere = function (i) { return i * i; };
-var addiere = function (summe, summand) { return summe + summand; };
+var square = function (i) { return i * i; };
+var add = function (s1, s2) { return s1 + s2; };
 \end{lstlisting}
 
 \begin{lstlisting}{javascript}
-_.reduce(_.map(_.range(1, 11), quadriere), addiere) === 385;
+_.reduce(_.map(_.range(1, 11), square), add) === 385;
 \end{lstlisting}
 
 \onslide+<2->
-oder
+\de{oder}\en{or}
 
 \begin{lstlisting}{javascript}
-_(1).range(11).map(quadriere).reduce(addiere) === 385;
+_(1).range(11).map(square).reduce(add) === 385;
 \end{lstlisting}
 
 \onslide+<3->
@@ -479,7 +479,7 @@ Haskell:
 \begin{lstlisting}{Haskell}
 foldl	(+) 0 (map (\x -> x*x) [1..10]) == 385
 \end{lstlisting}
-oder
+\de{oder}\en{or}
 \begin{lstlisting}{Haskell}
 (>.>) x f = f x
 [1..10] >.> map (\x -> x*x) >.> foldl (+) 0 == 385
@@ -488,25 +488,25 @@ oder
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Uff!}
+\begin{frame}[fragile]{\de{Uff!}\en{Phew!}}
 
 \begin{center}
 \Large
-OK, alle einmal tief durchatmen :-)
+\de{OK, alle einmal tief durchatmen :-)}\en{OK, everybody take a deep breath :-)}
 \end{center}
 
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]{Pattern Matching}
-Fibonacci-Funktion \glqq naiv\grqq{}:
+Fibonacci-\de{Funktion}\en{Function} \glqq \de{naiv}\en{na\"ive}\grqq{}:
 \begin{lstlisting}{Haskell}
 fib x = if x < 2 then x else fib (x-1) + fib (x-2)
 \end{lstlisting}
 
 \onslide+<2->
 \vfill
-Fibonacci-Funktion mit Pattern Matching:
+Fibonacci-\de{Funktion mit}\en{Function with} Pattern Matching:
 \begin{lstlisting}{Haskell}
 fib 0 = 0
 fib 1 = 1
@@ -515,8 +515,8 @@ fib x = fib (x-1) + fib (x-2)
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Algebraische Datentypen}
-Binärbaum:
+\begin{frame}[fragile]{\de{Algebraische Datentypen}\en{Algebraic Datatypes}}
+\de{Binärbaum}\en{Binary tree}:
 \begin{lstlisting}{Haskell}
 data Tree =
        Node Tree Tree
@@ -535,7 +535,7 @@ myTree = Node (Node (Leaf 4) (Node (Leaf 7) (Leaf 1))) (Leaf 3)
 }
 
 \onslide+<3->
-Summenfunktion:
+\de{Summenfunktion}\en{Summary function}:
 \onslide+<4->
 \begin{lstlisting}{Haskell}
 treeSum	(Leaf x) = x
@@ -553,20 +553,20 @@ treeSum myTree == 15
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Fazit}
+\begin{frame}[fragile]{\de{Fazit}\en{Bottom line}}
 \begin{itemize}
-\item Funktionale Programmierung ist verbreiteter als man denkt
-\item Java 8 hat funktionale Neuerungen
-\item Viele Sprachen bringen funktionale Aspekte oder Zusatzmodule mit
+\item \de{Funktionale Programmierung ist verbreiteter als man denkt}\en{Functional programming is more common than you may have expected}
+\item Java 8 \de{hat funktionale Neuerungen}\en{has new functional features}
+\item \de{Viele Sprachen bringen funktionale Aspekte oder Zusatzmodule mit}\en{Many languages have functional aspects or additional modules}
 \end{itemize}
 
 \vfill
 
 \onslide+<2->
-Referenzen:
+\de{Referenzen}\en{References}:
 
 \begin{itemize}
-\item Funktionale JS-Bibliothek: \url{http://lodash.com}
+\item \de{Funktionale JS-Bibliothek}\en{Functional JS-Library}: \url{http://lodash.com}
 \item Haskell: \url{http://www.haskell.org}
 \end{itemize}
 
@@ -577,9 +577,9 @@ Referenzen:
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 {
-\begin{frame}{Vielen Dank!}
+\begin{frame}{\de{Vielen Dank!}\en{Thank you very much!}}
 
-        Code \& Folien auf GitHub:
+        Code \& \de{Folien auf}\en{slides on} GitHub:
         \begin{center}
                 \url{https://github.com} \url{/NicoleRauch/FunctionalProgrammingForBeginners}
         \end{center}
