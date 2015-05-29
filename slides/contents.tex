@@ -228,7 +228,7 @@ times x = (\y -> x * y)
 \end{lstlisting}
 
 \onslide+<3->
-\de{Denn: Funktionen haben immer genau ein Argument}\en{Because functions always have exactly one argument}
+\de{Denn: Funktionen haben immer genau ein Argument}\en{Because functions always take exactly one argument}
 \vfill
 \onslide+<4->
 \de{Nutzen: Partielle Evaluierung:}\en{Useful for partial evaluation:}
@@ -246,13 +246,11 @@ times3 5 == 15
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]{\de{Und wenn ich kein Argument haben will?}\en{And what if I don't want an argument?}}
 \begin{itemize}
-\item \de{In echten funktionalen Sprachen bekommen Funktionen immer genau ein Argument!}\en{In real functional lanugages, functions always get exactly one argument!}
+\item \de{In echten funktionalen Sprachen bekommen Funktionen immer genau ein Argument!}\en{In real functional languages, functions always take exactly one argument!}
 \item \de{Was ist, wenn ich nichts habe?!}\en{What if I don't want to pass anything?}
 \onslide+<2->
 \item \texttt{Unit} to the rescue!
-\onslide+<3->
 \item \texttt{Unit} \de{ist ein Typ mit nur einem Element}\en{is a type with only one element}
-\onslide+<4->
 \item \de{Das Element heißt in Haskell}\en{In Haskell, this element is called} \texttt{()}
 \end{itemize}
 \end{frame}
@@ -288,7 +286,7 @@ filter (\x -> x `mod` 2 == 0) [1,2,3,4] == [2,4]
 \item map \de{oder auch}\en{or} collect
 \onslide+<2->
 \item \de{Nimmt eine Collection und eine Funktion}\en{Takes a collection and a function}
-\item \de{Liefert eine Collection, in der die Funktion auf jedes Element der ursprünglichen Collection angewandt wurde}\en{Yields a collection in which the function was applied to each element of the original collection}
+\item \de{Liefert eine Collection, in der die Funktion auf jedes Element der ursprünglichen Collection angewandt wurde}\en{Yields a collection of the results of applying the function to the elements of the original collection}
 \end{itemize}
 
 \onslide+<3->
@@ -479,6 +477,7 @@ Haskell:
 \begin{lstlisting}{Haskell}
 foldl	(+) 0 (map (\x -> x*x) [1..10]) == 385
 \end{lstlisting}
+\onslide+<4->
 \de{oder}\en{or}
 \begin{lstlisting}{Haskell}
 (>.>) x f = f x
