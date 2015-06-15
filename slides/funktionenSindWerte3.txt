@@ -1,0 +1,4 @@
+IntBinaryOperator times = (x, y) -> x * y;
+IntBinaryOperator timesVar = times;
+
+assertThat(timesVar.applyAsInt(3, 5), is(15));

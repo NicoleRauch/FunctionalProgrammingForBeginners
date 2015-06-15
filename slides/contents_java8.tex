@@ -129,29 +129,31 @@ Immutability
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Unterschiedlich!!
 \begin{frame}[fragile]{\de{Funktionen sind Werte}\en{Functions are values}}
-\onslide+<2->
-\begin{jsblock}
-JavaScript:
-\begin{lstlisting}{JavaScript}
-function times(x, y) { return x * y; }
-
-var timesVar = times;
-    
-timesVar(3, 5) === 15;
-\end{lstlisting}
-\end{jsblock}
-%\java{
-Java 8:
+\onslide*<2>{
+Java 8: Statische Methoden
+\lstinputlisting[language=Java]{funktionenSindWerte1.txt}
+}
+\onslide*<3>{
+Java 8: Objektmethoden
+\lstinputlisting[language=Java]{funktionenSindWerte2.txt}
+}
+\onslide*<4>{
+Java 8: Lambdas
+\lstinputlisting[language=Java]{funktionenSindWerte3.txt}
+}
+\onslide+<5->
+Java 8: Lambdas (mit eigenem Funktionsinterface)
 \begin{lstlisting}{Java}
-public interface TimesFunction { int eval(int x, int y); }
+interface TimesFunction { int eval(int x, int y); }
 
 TimesFunction times = (x, y) -> x * y;
 TimesFunction timesVar = times;
+
 assertThat(timesVar.eval(3, 5), is(15));
 \end{lstlisting}
-%}
-\onslide+<3->
+\onslide+<6->
 Haskell:
 \begin{lstlisting}{Haskell}
 times x y = x * y
@@ -164,15 +166,19 @@ timesVar 3 5 == 15
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Unterschiedlich!!
 \begin{frame}[fragile]{\de{Funktionen sind Funktionsparameter}\en{Functions are function parameters}}
 \onslide+<2->
-JavaScript:
-\begin{lstlisting}{javascript}
-function times3(y) { return 3 * y; };
+Java 8:
+\begin{lstlisting}{Java}
+class Examples { 
+    static int apply(IntUnaryOperator func, int arg) { 
+        return func.applyAsInt(arg); 
+    }
+}
+IntUnaryOperator func = x -> 3 * x;
 
-function apply(func, arg) { return func(arg); }
-
-apply(times3, 5) === 15;
+assertThat(Examples.apply(func, 5), is(15));
 \end{lstlisting}
 
 \onslide+<3->
@@ -186,13 +192,16 @@ apply (\ x -> 3 * x) 5 == 15
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Unterschiedlich!!
 \begin{frame}[fragile]{\de{Funktionen sind Rückgabewerte}\en{Functions are return values}}
 \onslide+<2->
-JavaScript:
-\begin{lstlisting}{javascript}
-function times(x) { return function (y) { return x * y; }; }
+Java 8:
+\begin{lstlisting}{Java}
+interface FunctionFunction { IntUnaryOperator eval(int x); }
 
-times(3)(5) === 15;
+FunctionFunction times = x -> { return y -> x * y; };
+
+assertThat(times.eval(3).applyAsInt(5), is(15));
 \end{lstlisting}
 
 \onslide+<3->
@@ -206,14 +215,15 @@ times 3 5 == 15
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Unterschiedlich!!
 \begin{frame}[fragile]{\de{Komisch, oder?}\en{Strange... ?!}}
-JavaScript: \de{Zwei verschiedene Aufrufe}\en{Two different invocations}
-\begin{lstlisting}{javascript}
-function times(x, y) { return x * y; }
-times(3, 5) === 15;
+Java 8: \de{Zwei verschiedene Aufrufe}\en{Two different invocations}
+\begin{lstlisting}{Java}
+IntBinaryOperator times = (x, y) -> x * y;
+assertThat(times.applyAsInt(3, 5), is(15));
 
-function times(x) { return function (y) { return x * y; }; }
-times(3)(5) === 15;
+FunctionFunction times = x -> { return y -> x * y; };
+assertThat(times.eval(3).applyAsInt(5), is(15));
 \end{lstlisting}
 ~\\
 Haskell: \de{Zweimal derselbe Aufruf}\en{Two identical invocations}
@@ -269,6 +279,7 @@ times3 5 == 15
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Unterschiedlich!!
 \begin{frame}[fragile]{\de{Wichtige Bibliotheksfunktionen}\en{Important library functions}: filter}
 \begin{itemize}
 \item filter \de{oder auch}\en{or} select
@@ -278,9 +289,9 @@ times3 5 == 15
 \end{itemize}
 
 \onslide+<3->
-JavaScript: (\de{mit freundlicher Unterstützung der lodash-Bibliothek}\en{using the lodash-library})
-\begin{lstlisting}{javascript}
-_.filter([1, 2, 3, 4], function (x) { return x % 2 === 0; }) === [2, 4]
+Java 8:
+\begin{lstlisting}{Java}
+assertThat(Arrays.asList(1, 2, 3, 4).stream().filter(x -> x % 2 == 0).toArray(), is(new Integer[]{2, 4}));
 \end{lstlisting}
 
 \onslide+<4->
@@ -294,6 +305,7 @@ filter (\x -> x `mod` 2 == 0) [1,2,3,4] == [2,4]
 % find oder detect
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Unterschiedlich!!
 \begin{frame}[fragile]{\de{Wichtige Bibliotheksfunktionen}\en{Important library functions}: map}
 \begin{itemize}
 \item map \de{oder auch}\en{or} collect
@@ -303,9 +315,10 @@ filter (\x -> x `mod` 2 == 0) [1,2,3,4] == [2,4]
 \end{itemize}
 
 \onslide+<3->
-JavaScript:
-\begin{lstlisting}{javascript}
-_.map( [1, 2, 3, 4], function (x) { return x + 5; } ) === [6, 7, 8, 9]
+Java 8:
+\begin{lstlisting}{Java}
+assertThat(Arrays.asList(1, 2, 3, 4).stream().map(x -> x + 5).toArray(), 
+    is(new Integer[]{6, 7, 8, 9}));
 \end{lstlisting}
 
 \onslide+<4->
@@ -317,6 +330,7 @@ map (\x -> x + 5) [1,2,3,4] == [6,7,8,9]
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Unterschiedlich !!
 \begin{frame}[fragile]{\de{Wichtige Bibliotheksfunktionen}\en{Important library functions}: fold}
 \begin{itemize}
 \item fold \de{oder auch}\en{or} reduce \de{oder}\en{or} inject
@@ -330,9 +344,10 @@ map (\x -> x + 5) [1,2,3,4] == [6,7,8,9]
 
 \onslide+<3->
 
-JavaScript:
-\begin{lstlisting}{javascript}
-_.foldl( [2, 3, 4, 5], function (x, y) { return x * y; }, 1 ) === 120
+Java 8:
+\begin{lstlisting}{Java}
+assertThat(Arrays.asList(2, 3, 4, 5).stream().reduce(1, (x, y) -> x*y), 
+    is(120));
 \end{lstlisting}
 \onslide+<4->
 Haskell:
@@ -431,66 +446,61 @@ for(int i = 1; i <= 10; i++) {
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Unterschiedlich !!
 \begin{frame}[fragile]{\de{Trennen der Verantwortlichkeiten}\en{Separation of Concerns}}
 \begin{itemize}
 \item \de{Erzeugen der Zahlenfolge von 1 bis 10}\en{Creating the sequence of numbers from 1 to 10}
 \onslide+<2->
-\begin{lstlisting}{javascript}
-var sequence = _.range(1, 11);
+\begin{lstlisting}{Java}
+IntStream sequence = IntStream.range(1, 11);
 \end{lstlisting}
 \onslide+<1->
 \item \de{Quadrieren einer Zahl}\en{Calculating the square of a number}
 \onslide+<3->
-\begin{lstlisting}{javascript}
-var square = function (i) { return i * i; };
+\begin{lstlisting}{Java}
+IntUnaryOperator square = x -> x*x;
 \end{lstlisting}
 \onslide+<1->
 \item \de{Berechnen der Quadratzahl jeder Zahl in der Folge}\en{Calculating the square of each number in the sequence}
 \onslide+<4->
-\begin{lstlisting}{javascript}
-var squaredSequence = _.map(sequence, square)
+\begin{lstlisting}{Java}
+IntStream squaredSequence = sequence.map(square);
 \end{lstlisting}
 \onslide+<1->
 \item \de{Addieren zweier Zahlen}\en{Calculating the sum of two numbers}
 \onslide+<5->
 \begin{lstlisting}{javascript}
-var add = function (s1, s2) { return s1 + s2; };
+IntBinaryOperator add = (x,y) -> x+y;
 \end{lstlisting}
 \onslide+<1->
 \item \de{Aufsummieren der Quadratzahlen}\en{Calculating the sum of all squares}
 \onslide+<6->
-\begin{lstlisting}{javascript}
-var sum = _.reduce(squaredSequence, add);
+\begin{lstlisting}{Java}
+Integer sum = squaredSequence.reduce(0, add);
 \end{lstlisting}
 \end{itemize}
 
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Unterschiedlich !!
 \begin{frame}[fragile]{\de{Zusammensetzen der Komponenten}\en{Combining the components}}
-JavaScript:
-\begin{lstlisting}{javascript}
-var square = function (i) { return i * i; };
-var add = function (s1, s2) { return s1 + s2; };
+Java 8:
+\begin{lstlisting}{Java}
+IntUnaryOperator square = x -> x*x;
+IntBinaryOperator add = (x,y) -> x+y;
 \end{lstlisting}
 
-\begin{lstlisting}{javascript}
-_.reduce(_.map(_.range(1, 11), square), add) === 385;
+\begin{lstlisting}{Java}
+assertThat(IntStream.range(1, 11).map(square).reduce(0, add), is(385));
 \end{lstlisting}
 
 \onslide+<2->
-\de{oder}\en{or}
-
-\begin{lstlisting}{javascript}
-_(1).range(11).map(square).reduce(add) === 385;
-\end{lstlisting}
-
-\onslide+<3->
 Haskell:
 \begin{lstlisting}{Haskell}
 foldl	(+) 0 (map (\x -> x*x) [1..10]) == 385
 \end{lstlisting}
-\onslide+<4->
+\onslide+<3->
 \de{oder}\en{or}
 \begin{lstlisting}{Haskell}
 (>.>) x f = f x
@@ -565,20 +575,21 @@ treeSum myTree == 15
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Unterschiedlich!!
 \begin{frame}[fragile]{\de{Fazit}\en{Bottom line}}
 \begin{itemize}
 \item \de{Funktionale Programmierung ist verbreiteter als man denkt}\en{Functional programming is more common than you may have expected}
-\item Java 8 \de{hat funktionale Neuerungen}\en{has new functional features}
+% \item Java 8 \de{hat funktionale Neuerungen}\en{has new functional features}
 \item \de{Viele Sprachen bringen funktionale Aspekte oder Zusatzmodule mit}\en{Many languages have functional aspects or additional modules}
 \end{itemize}
 
 \vfill
 
 \onslide+<2->
-\de{Referenzen}\en{References}:
+\de{Referenz}\en{Reference}:
 
 \begin{itemize}
-\item \de{Funktionale JS-Bibliothek}\en{Functional JS-Library}: \url{http://lodash.com}
+% \item \de{Funktionale JS-Bibliothek}\en{Functional JS-Library}: \url{http://lodash.com}
 \item Haskell: \url{http://www.haskell.org}
 \end{itemize}
 

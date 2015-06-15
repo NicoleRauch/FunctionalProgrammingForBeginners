@@ -1,0 +1,6 @@
+class Examples { int times (int x, int y) { return x * y; } }
+
+Examples examples = new Examples();
+IntBinaryOperator timesVar = examples::times;
+
+assertThat(timesVar.applyAsInt(3, 5), is(15));

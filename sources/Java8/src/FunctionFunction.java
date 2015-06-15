@@ -1,4 +1,6 @@
+import java.util.function.IntUnaryOperator;
+
 
 public interface FunctionFunction {
-	Function eval(int x);
+	IntUnaryOperator eval(int x);
 }

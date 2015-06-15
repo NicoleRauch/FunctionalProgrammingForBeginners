@@ -1,3 +1,5 @@
+import java.util.function.IntUnaryOperator;
+
 
 
 public class Examples {
@@ -10,8 +12,8 @@ public class Examples {
 		return x * y;
 	}
 	
-	public static int apply(Function f, int x) {
-		return f.eval(x);
+	public static int apply(IntUnaryOperator func, int arg) {
+		return func.applyAsInt(arg);
 	}
 	
 	public int func(int x) {

@@ -2,8 +2,10 @@
 
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
+import java.util.function.IntBinaryOperator;
+import java.util.function.IntUnaryOperator;
 import java.util.stream.IntStream;
 
 import org.junit.Test;
@@ -14,6 +16,13 @@ public class ExamplesTest {
 	
 	@Test
 	public void lambdasAreFirstOrderCitizens() {
+		IntBinaryOperator times = (x, y) -> x * y;
+		IntBinaryOperator timesVar = times;
+		assertThat(timesVar.applyAsInt(3, 5), is(15));
+	}
+	
+	@Test
+	public void lambdasAreFirstOrderCitizens_withSelfDefinedInterface() {
 		TimesFunction times = (x, y) -> x * y;
 		TimesFunction timesVar = times;
 		assertThat(timesVar.eval(3, 5), is(15));
@@ -21,20 +30,20 @@ public class ExamplesTest {
 	
 	@Test
 	public void staticMethodsAreFirstOrderCitizens() {
-		TimesFunction timesVar = Examples::staticTimes;
-		assertThat(timesVar.eval(3, 5), is(15));
+		IntBinaryOperator timesVar = Examples::staticTimes;
+		assertThat(timesVar.applyAsInt(3, 5), is(15));
 	}
 	
 	@Test
 	public void nonstaticMethodsFirstOrderCitizens() {
 		Examples examples = new Examples();
-		TimesFunction timesVar = examples::times;
-		assertThat(timesVar.eval(3, 5), is(15));
+		IntBinaryOperator timesVar = examples::times;
+		assertThat(timesVar.applyAsInt(3, 5), is(15));
 	}
 	
 	@Test
 	public void functionsCanBePassedAsFunctionArguments() {
-		Function func = (y) -> 3 * y;
+		IntUnaryOperator func = y -> 3 * y;
 		
 		assertThat(Examples.apply(func, 5), is(15));
 		assertThat(Examples.apply(Examples::staticFunc, 5), is(15));
@@ -44,8 +53,8 @@ public class ExamplesTest {
 
 	@Test
 	public void functionsCanBeReturnedByFunctions() {
-		FunctionFunction times = (x) -> { return (y) -> x * y; };
-		assertThat(times.eval(3).eval(5), is(15));
+		FunctionFunction times = x -> { return y -> x * y; };
+		assertThat(times.eval(3).applyAsInt(5), is(15));
 	}
 	
 	@Test
@@ -65,22 +74,31 @@ public class ExamplesTest {
 	
 	@Test
 	public void sequenceOfNumbers() throws Exception {
-		assertThat(IntStream.range(1, 11).toArray(), is(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}));
+		IntStream sequence = IntStream.range(1, 11);
+		assertThat(sequence.toArray(), is(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}));
 	}
 	
 	@Test
 	public void squaredSequenceOfNumbers() throws Exception {
-		assertThat(IntStream.range(1, 11).map(x -> x*x).toArray(), is(new Integer[]{1, 4, 9, 16, 25, 36, 49, 64, 81, 100}));
+		IntStream sequence = IntStream.range(1, 11);
+		IntUnaryOperator square = x -> x*x;
+		IntStream squaredSequence = sequence.map(square);
+		assertThat(squaredSequence.toArray(), is(new Integer[]{1, 4, 9, 16, 25, 36, 49, 64, 81, 100}));
 	}
 
 	@Test
 	public void summedSequenceOfNumbers() throws Exception {
-		assertThat(asList(1, 4, 9, 16, 25, 36, 49, 64, 81, 100).stream().reduce(0, (x,y) -> x+y), is(385));
+		IntStream squaredSequence = IntStream.of(1, 4, 9, 16, 25, 36, 49, 64, 81, 100);
+		IntBinaryOperator add = (x,y) -> x+y;
+		int sum = squaredSequence.reduce(0, add);
+		assertThat(sum, is(385));
 	}
 	
 	@Test
 	public void combiningAllSteps() throws Exception {
-		assertThat(IntStream.range(1, 11).map(x -> x*x).reduce(0, (x,y) -> x+y), is(385));
+		IntUnaryOperator square = x -> x*x;
+		IntBinaryOperator add = (x,y) -> x+y;
+		assertThat(IntStream.range(1, 11).map(square).reduce(0, add), is(385));
 	}
 	
 

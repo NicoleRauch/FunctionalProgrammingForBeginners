@@ -12,11 +12,19 @@
 \RequirePackage{ifthen}
 \newif\ifen
 \newif\ifde
+\newif\ifjs
+\newif\ifjava
 \newcommand{\en}[1]{\ifen#1\fi}
 \newcommand{\de}[1]{\ifde#1\fi}
+\newcommand{\js}[1]{\ifjs#1\fi}
+\newcommand{\java}[1]{\ifjava#1\fi}
 
-%\detrue % Enables German Language texts
-\entrue % Enables English Language texts
+\newenvironment{jsblock}{\ifjs}{\fi}
+
+\detrue % Enables German Language texts
+%\entrue % Enables English Language texts
+%\jstrue
+\javatrue
 
 \AtBeginPart{\frame{\partpage}}
 
@@ -73,6 +81,7 @@
 		\titlepage
 	\end{frame}
 }
-\include{contents}
+\js{\include{contents}}
+\java{\include{contents_java8}}
 \end{document}
 
