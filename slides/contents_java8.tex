@@ -422,70 +422,58 @@ foldl	(*) 1 [2,3,4,5]                                                -- 120
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{\de{Typinferenz}\en{Type inference}}
+\begin{frame}[fragile]{Typinferenz}
 \begin{itemize}
-\item Haskell: \de{starkes statisches Typsystem}\en{strong static type system}
-\item \de{Leichtgewichtige Verwendung dank Typinferenz}\en{Lightweight usage thanks to type inference}
-\item \de{Herleitung des allgemeinst möglichen Typs}\en{Derivation of the most general type}
+\item Haskell: starkes statisches Typsystem
+\item Leichtgewichtige Verwendung dank Typinferenz
+\item Herleitung des allgemeinst möglichen Typs
 \end{itemize}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{\de{Typinferenz}\en{Type inference}}
-
-Was ist der Typ von
-\begin{lstlisting}{Haskell}
-foldl	(*) 1 [2,3,4,5]
-\end{lstlisting}
 
 \onslide+<2->
-\[
-\mbox{foldl} :: 
-\onslide*<2>{(a \rightarrow b \rightarrow a)}\onslide*<3->{\underbrace{(a \rightarrow b \rightarrow a)}_{\mbox{Funktion}}} 
-\rightarrow 
-\onslide*<2-3>{a}\onslide*<4->{\underbrace{a}_{\mbox{Startwert}}}
-\rightarrow 
-\onslide*<2-4>{[b]}\onslide*<5->{\underbrace{[b]}_{\mbox{Liste}}}
-\rightarrow 
-\onslide*<2-5>{a}\onslide*<6->{\underbrace{a}_{\mbox{Rückgabewert}}}
-\]
 
-\onslide*<7>{
-  \begin{center}
-    \includegraphics[width=.7\framewidth]{fold_2.png}
-  \end{center}
-}
+Beispiel:
+\begin{lstlisting}{Haskell}
+f x = x
+\end{lstlisting}
 
 
-\[
-\onslide*<8->{(*) :: }
-\onslide*<8>{\mbox{Num } a \Rightarrow a \rightarrow a \rightarrow a}
-\onslide*<9->{\underbrace{\mbox{Num }a}_{\mbox{Bedingung}} \Rightarrow \underbrace{a}_{\mbox{1. Arg}} \rightarrow \underbrace{a}_{\mbox{2. Arg}} \rightarrow \underbrace{a}_{\mbox{Rückgabe}}
-}
-\]
+\onslide+<3->
+Typ: 
 
-\[
-\onslide*<10->{
-\mbox{foldl} :: 
-\mbox{Num } a \Rightarrow (a \rightarrow a \rightarrow a) \rightarrow a \rightarrow [a] \rightarrow a
-}
-\]
+\begin{lstlisting}{Haskell}
+f :: a -> a
+\end{lstlisting}
+
+\texttt{a} : Typvariable  (vergleichbar mit Generics in Java o.~ä.)
+
+\texttt{->} Funktionstyp (Argumenttyp steht links, Ergebnistyp steht rechts)
 
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{\de{Typinferenz}\en{Type inference}}
+\begin{frame}[fragile]{Typinferenz (2)}
 
-\de{Compilerfehler für}\en{Compile error for}:
+
 \begin{lstlisting}{Haskell}
-foldl	(*) "x" [2,3,4,5]
-
-No instance for (Num [Char]) arising from a use of `*'
-Possible fix: add an instance declaration for (Num [Char])
+f x = x + 1
 \end{lstlisting}
 
-\end{frame}
 
+\onslide+<2->
+Typ:
+
+\begin{lstlisting}{Haskell}
+f :: Num a => a -> a
+\end{lstlisting}
+
+\texttt{Num a} : Typklasse. Einschränkung der Typvariablen \texttt{a} auf numerische Typen
+
+\onslide+<3->
+\vfill
+
+Empfehlung: Typsignatur stets annotieren!  Zur Überprüfung der eigenen Annahmen.
+
+\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]{\de{Eine einfache Berechnung}\en{A simple calculation}}
@@ -679,7 +667,6 @@ treeSum myTree                                -- 15
 \de{Referenz}\en{Reference}:
 
 \begin{itemize}
-% \item \de{Funktionale JS-Bibliothek}\en{Functional JS-Library}: \url{http://lodash.com}
 \item Haskell: \url{http://www.haskell.org}
 \end{itemize}
 
