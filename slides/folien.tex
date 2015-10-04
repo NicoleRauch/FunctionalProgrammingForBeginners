@@ -30,11 +30,11 @@
 
 \AtBeginPart{\frame{\partpage}}
 
-\author{Nicole Rauch}
+\author{~}
 \js{\title{\de{Jetzt funkt's!}\en{The Joy of Functional Programming}}}
 \java{\title{\de{Funktioniert's?}\en{The Joy of Functional Programming}}}
 \subtitle{\de{Funktionale Programmierung für Anfänger}\en{~}}
-\institute{\de{Softwareentwicklung und Entwicklungscoaching}\en{Software Development and Development Coaching}}
+\institute{~}
 \date{9. Juli 2015}
 
 \usepackage{ngerman}
@@ -45,6 +45,16 @@
 
 \usepackage{tikz}
 \usetikzlibrary{shapes,backgrounds,mindmap}
+
+\usepackage{eso-pic}
+\makeatletter
+\AddToShipoutPicture{%
+\begin{tikzpicture}%
+% put: x (from left) , y (from bottom)
+\put(240,10){\includegraphics[width=4cm]{../../logos/German.png}}%
+\end{tikzpicture}%
+}
+\makeatother
 
 \definecolor[named]{keywords}{HTML}{005D35}
 \definecolor[named]{comments}{HTML}{808080}
@@ -80,6 +90,7 @@
 
 \begin{document}
 {
+	\usebackgroundtemplate{} % required, otherwise the tikzpicture does not get displayed
 	\begin{frame}[t,plain]
 		\titlepage
 	\end{frame}
