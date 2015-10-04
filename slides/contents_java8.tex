@@ -176,9 +176,8 @@ class Examples {
         return func.applyAsInt(arg); 
     }
 }
-IntUnaryOperator func = x -> 3 * x;
 
-assertThat(Examples.apply(func, 5), is(15));
+assertThat(Examples.apply(x -> 3 * x, 5), is(15));
 \end{lstlisting}
 
 \onslide+<3->
