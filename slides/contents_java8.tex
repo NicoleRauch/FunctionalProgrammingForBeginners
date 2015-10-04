@@ -554,7 +554,7 @@ for(int i = 1; i <= 10; i++) {
 \item \de{Erzeugen der Zahlenfolge von 1 bis 10}\en{Creating the sequence of numbers from 1 to 10}
 \onslide+<2->
 \begin{lstlisting}{Java}
-IntStream sequence = IntStream.range(1, 11);
+IntStream sequence = IntStream.rangeClosed(1, 10);
 \end{lstlisting}
 \onslide+<1->
 \item \de{Quadrieren einer Zahl}\en{Calculating the square of a number}
@@ -594,7 +594,7 @@ IntBinaryOperator add = (x,y) -> x+y;
 \end{lstlisting}
 
 \begin{lstlisting}{Java}
-assertThat(IntStream.range(1, 11).map(square).reduce(0, add), is(385));
+IntStream.rangeClosed(1, 10).map(square).reduce(0, add);      // 385
 \end{lstlisting}
 
 \onslide+<2->
