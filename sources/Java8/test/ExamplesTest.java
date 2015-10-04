@@ -8,6 +8,8 @@ import java.util.function.IntBinaryOperator;
 import java.util.function.IntUnaryOperator;
 import java.util.stream.IntStream;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.Matcher;
 import org.junit.Test;
 
 
@@ -80,7 +82,7 @@ public class ExamplesTest {
 	
 	@Test
 	public void squaredSequenceOfNumbers() throws Exception {
-		IntStream sequence = IntStream.range(1, 11);
+		IntStream sequence = IntStream.rangeClosed(1, 10); // or IntStream.range(1, 11);
 		IntUnaryOperator square = x -> x*x;
 		IntStream squaredSequence = sequence.map(square);
 		assertThat(squaredSequence.toArray(), is(new Integer[]{1, 4, 9, 16, 25, 36, 49, 64, 81, 100}));
