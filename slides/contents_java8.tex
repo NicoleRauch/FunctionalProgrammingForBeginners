@@ -112,15 +112,88 @@ Immutability
 \en{Each variable can only be assigned to once}
 \end{center}
 
-\vspace{1em}
+\onslide+<4->
+\begin{center}
+\de{In Java nicht direkt unterstützt}
+\end{center}
+
+\onslide+<5->
+\begin{center}
+\de{Kann trotzdem leicht verwirklicht werden:}
+\end{center}
+
+\begin{lstlisting}{Java}
+class Point {  private int x, y;  public Point (int x, int y) {    this.x = x;    this.y = y;  }  // im restlichen Code werden x und y nur noch gelesen}
+\end{lstlisting}
+
+
+\end{frame}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{\de{Was ist denn an funktionaler Programmierung so besonders?}\en{Now, what is so special about functional programming?}}
+
+\onslide+<2->
+\begin{center}
+\Large
+Seiteneffektfreiheit
+\end{center}
+
+\onslide+<3->
+\begin{center}
+\de{\glqq{}alles, was den Ablauf eines Computerprogramms oder die Außenwelt verändert, ohne von einer Funktion zurückgegeben worden zu sein\grqq{}}
+\end{center}
 
 \onslide+<4->
+\begin{itemize}
+\item Ein-/Ausgabe
+\item Exceptions
+\item Logging
+\item Abhängigkeit von (externen) Konfigurationen
+\item Veränderungen des Zustands 
+\item Nichtdeterminismus (z. B. durch die Verwendung eines Zufallszahlengenerators).
+\end{itemize}
+
+\onslide+<5->
+\begin{center}
+\de{Manche Sprachen zeigen das Vorhandensein von Seiteneffekten sogar in der Typsignatur an}
+\end{center}
+
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{\de{Was ist denn an funktionaler Programmierung so besonders?}\en{Now, what is so special about functional programming?}}
+
+\begin{center}
+\Large
+Seiteneffektfreiheit
+\end{center}
+
+\begin{center}
+\de{auch nicht direkt durch Java 8 unterstützt - Codierungsregeln helfen}
+\end{center}
+
+\onslide+<2->
+\begin{lstlisting}{Java}
+class TrennungVonSeiteneffekten {
+  public void mitSeiteneffekt(){    String initialerWert = System.console().readLine();     String ergebnis = ohneSeiteneffekt(initialerWert);    System.out.println("Das Resultat: " + ergebnis);  }
+  public static String ohneSeiteneffekt(String initialerWert){    return /* Ergebnis der Funktion */ ;  }}
+\end{lstlisting}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{\de{Was ist denn an funktionaler Programmierung so besonders?}\en{Now, what is so special about functional programming?}}
+
+\onslide+<2->
 \begin{center}
 \Large
 \de{Funktionen sind}\en{Functions are} \glqq{}first order citizens\grqq{}
 \end{center}
 
-\onslide+<5->
+\onslide+<3->
 \begin{center}
 \de{Mit Funktionen kann man dasselbe machen wie mit Strings oder Zahlen}
 \en{Functions can be treated in the same way as strings or numbers}
