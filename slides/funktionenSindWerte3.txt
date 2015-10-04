@@ -1,4 +1,3 @@
 IntBinaryOperator times = (x, y) -> x * y;
-IntBinaryOperator timesVar = times;
 
-timesVar.applyAsInt(3, 5);                         // 15
+times.applyAsInt(3, 5);                            // 15

@@ -102,25 +102,21 @@
 
 \onslide+<2->
 \begin{center}
-\Large
+\LARGE
 Immutability
 \end{center}
 
+\begin{itemize}
 \onslide+<3->
-\begin{center}
-\de{Jeder Variablen darf nur einmal ein Wert zugewiesen werden}
+\item \de{Jeder Variablen darf nur einmal ein Wert zugewiesen werden}
 \en{Each variable can only be assigned to once}
-\end{center}
 
 \onslide+<4->
-\begin{center}
-\de{In Java nicht direkt unterstützt}
-\end{center}
+\item \de{In Java nicht direkt unterstützt}
 
 \onslide+<5->
-\begin{center}
-\de{Kann trotzdem leicht verwirklicht werden:}
-\end{center}
+\item \de{Kann trotzdem leicht verwirklicht werden:}
+\end{itemize}
 
 \begin{lstlisting}{Java}
 class Point {  private int x, y;  public Point (int x, int y) {    this.x = x;    this.y = y;  }  // im restlichen Code werden x und y nur noch gelesen}
@@ -134,18 +130,16 @@ class Point {  private int x, y;  public Point (int x, int y) {    this.x = x
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]{\de{Was ist denn an funktionaler Programmierung so besonders?}\en{Now, what is so special about functional programming?}}
 
-\onslide+<2->
 \begin{center}
-\Large
+\LARGE
 Seiteneffektfreiheit
 \end{center}
 
-\onslide+<3->
-\begin{center}
-\de{\glqq{}alles, was den Ablauf eines Computerprogramms oder die Außenwelt verändert, ohne von einer Funktion zurückgegeben worden zu sein\grqq{}}
-\end{center}
+\begin{itemize}
+\onslide+<2->
+\item \de{\glqq{}alles, was den Ablauf eines Computerprogramms oder die Außenwelt verändert, ohne von einer Funktion zurückgegeben worden zu sein\grqq{}}
 
-\onslide+<4->
+\onslide+<3->
 \begin{itemize}
 \item Ein-/Ausgabe
 \item Exceptions
@@ -155,10 +149,10 @@ Seiteneffektfreiheit
 \item Nichtdeterminismus (z. B. durch die Verwendung eines Zufallszahlengenerators).
 \end{itemize}
 
-\onslide+<5->
-\begin{center}
-\de{Manche Sprachen zeigen das Vorhandensein von Seiteneffekten sogar in der Typsignatur an}
-\end{center}
+\onslide+<4->
+\item \de{Manche Sprachen zeigen das Vorhandensein von Seiteneffekten sogar in der Typsignatur an}
+
+\end{itemize}
 
 
 \end{frame}
@@ -167,13 +161,13 @@ Seiteneffektfreiheit
 \begin{frame}[fragile]{\de{Was ist denn an funktionaler Programmierung so besonders?}\en{Now, what is so special about functional programming?}}
 
 \begin{center}
-\Large
+\LARGE
 Seiteneffektfreiheit
 \end{center}
 
-\begin{center}
-\de{auch nicht direkt durch Java 8 unterstützt - Codierungsregeln helfen}
-\end{center}
+\de{auch nicht direkt durch Java 8 unterstützt - Codierungsregeln helfen} 
+
+~\\
 
 \onslide+<2->
 \begin{lstlisting}{Java}
@@ -187,13 +181,12 @@ class TrennungVonSeiteneffekten {
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]{\de{Was ist denn an funktionaler Programmierung so besonders?}\en{Now, what is so special about functional programming?}}
 
-\onslide+<2->
 \begin{center}
-\Large
+\LARGE
 \de{Funktionen sind}\en{Functions are} \glqq{}first order citizens\grqq{}
 \end{center}
 
-\onslide+<3->
+\onslide+<2->
 \begin{center}
 \de{Mit Funktionen kann man dasselbe machen wie mit Strings oder Zahlen}
 \en{Functions can be treated in the same way as strings or numbers}
@@ -206,7 +199,7 @@ class TrennungVonSeiteneffekten {
 \begin{frame}[fragile]{\de{Funktionen sind Werte}\en{Functions are values}}
 \onslide*<2>{
 Java 8: Statische Methoden
-% lstinputlisting ist erforderlich wegen onslide!!
+% lstinputlisting ist erforderlich wegen onslide* !!
 \lstinputlisting[language=Java]{funktionenSindWerte1.txt}
 }
 \onslide*<3>{
@@ -223,9 +216,8 @@ Java 8: Lambdas (mit eigenem Funktionsinterface)
 interface TimesFunction { int eval(int x, int y); }
 
 TimesFunction times = (x, y) -> x * y;
-TimesFunction timesVar = times;
 
-timesVar.eval(3, 5);                                 // 15
+times.eval(3, 5);                                    // 15
 \end{lstlisting}
 \onslide+<6->
 Haskell:
@@ -313,7 +305,7 @@ times 3 5                                                 -- 15
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]{Currying! (\de{oder auch Schönfinkeln}\en{also known as Schönfinkeling})}
 \onslide+<2->
-\de{In echten funktionalen Sprachen schreiben wir:}\en{In real functional languages we write:}
+\de{In manchen funktionalen Sprachen schreiben wir:}\en{In real functional languages we write:}
 \begin{lstlisting}{Haskell}
 times x y = x * y
 \end{lstlisting}
@@ -391,9 +383,9 @@ map (\x -> x + 5) [1,2,3,4]                               -- [6,7,8,9]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Unterschiedlich !!
-\begin{frame}[fragile]{\de{Wichtige Bibliotheksfunktionen}\en{Important library functions}: fold}
+\begin{frame}[fragile]{\de{Wichtige Bibliotheksfunktionen}\en{Important library functions}: reduce}
 \begin{itemize}
-\item fold \de{oder auch}\en{or} reduce \de{oder}\en{or} inject
+\item reduce \de{oder auch}\en{or} foldl / foldr \de{oder}\en{or} inject
 \onslide*<2>{
 \item \de{Nimmt eine Collection, eine Funktion und einen Startwert}\en{Takes a collection, a function and an initial value}
 \item \de{Verbindet Startwert und erstes Element der Collection mit Hilfe der Funktion}\en{Merges initial value and first collection entry using the function}
