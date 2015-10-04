@@ -2,4 +2,4 @@ class Examples { static int staticTimes (int x, int y) { return x * y; } }
 
 IntBinaryOperator timesVar = Examples::staticTimes;
 
-assertThat(timesVar.applyAsInt(3, 5), is(15));
+timesVar.applyAsInt(3, 5);                         // 15

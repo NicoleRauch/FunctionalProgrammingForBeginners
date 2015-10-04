@@ -206,6 +206,7 @@ class TrennungVonSeiteneffekten {
 \begin{frame}[fragile]{\de{Funktionen sind Werte}\en{Functions are values}}
 \onslide*<2>{
 Java 8: Statische Methoden
+% lstinputlisting ist erforderlich wegen onslide!!
 \lstinputlisting[language=Java]{funktionenSindWerte1.txt}
 }
 \onslide*<3>{
@@ -224,7 +225,7 @@ interface TimesFunction { int eval(int x, int y); }
 TimesFunction times = (x, y) -> x * y;
 TimesFunction timesVar = times;
 
-assertThat(timesVar.eval(3, 5), is(15));
+timesVar.eval(3, 5);                                 // 15
 \end{lstlisting}
 \onslide+<6->
 Haskell:
@@ -233,7 +234,7 @@ times x y = x * y
 
 timesVar = times
 
-timesVar 3 5 == 15
+timesVar 3 5                                        -- 15
 \end{lstlisting}
 
 \end{frame}
@@ -250,7 +251,7 @@ class Examples {
     }
 }
 
-assertThat(Examples.apply(x -> 3 * x, 5), is(15));
+Examples.apply(x -> 3 * x, 5);                 // 15
 \end{lstlisting}
 
 \onslide+<3->
@@ -258,7 +259,7 @@ Haskell:
 \begin{lstlisting}{Haskell}
 apply func arg = func arg
 
-apply (\ x -> 3 * x) 5 == 15
+apply (\ x -> 3 * x) 5                         -- 15
 \end{lstlisting}
 
 \end{frame}
@@ -273,7 +274,7 @@ interface FunctionFunction { IntUnaryOperator eval(int x); }
 
 FunctionFunction times = x -> { return y -> x * y; };
 
-assertThat(times.eval(3).applyAsInt(5), is(15));
+times.eval(3).applyAsInt(5);                    // 15
 \end{lstlisting}
 
 \onslide+<3->
@@ -281,7 +282,7 @@ Haskell:
 \begin{lstlisting}{Haskell}
 times x = (\y -> x * y)
 
-times 3 5 == 15
+times 3 5                                       -- 15
 \end{lstlisting}
 
 \end{frame}
@@ -292,19 +293,19 @@ times 3 5 == 15
 Java 8: \de{Zwei verschiedene Aufrufe}\en{Two different invocations}
 \begin{lstlisting}{Java}
 IntBinaryOperator times = (x, y) -> x * y;
-assertThat(times.applyAsInt(3, 5), is(15));
+times.applyAsInt(3, 5);                                   // 15
 
 FunctionFunction times = x -> { return y -> x * y; };
-assertThat(times.eval(3).applyAsInt(5), is(15));
+times.eval(3).applyAsInt(5);                              // 15
 \end{lstlisting}
 ~\\
 Haskell: \de{Zweimal derselbe Aufruf}\en{Two identical invocations}
 \begin{lstlisting}{Haskell}
 times x y = x * y
-times 3 5 == 15
+times 3 5                                                 -- 15
 
 times x = (\y -> x * y)
-times 3 5 == 15
+times 3 5                                                 -- 15
 \end{lstlisting}
 
 \end{frame}
@@ -332,7 +333,7 @@ times x y = x * y
 
 times3 = times 3
 
-times3 5 == 15
+times3 5                          -- 15
 \end{lstlisting}
 
 
@@ -363,13 +364,13 @@ times3 5 == 15
 \onslide+<3->
 Java 8:
 \begin{lstlisting}{Java}
-assertThat(Arrays.asList(1, 2, 3, 4).stream().filter(x -> x % 2 == 0).toArray(), is(new Integer[]{2, 4}));
+Arrays.asList(1, 2, 3, 4).stream().filter(x -> x % 2 == 0).toArray();          // new Integer[]{2, 4}
 \end{lstlisting}
 
 \onslide+<4->
 Haskell:
 \begin{lstlisting}{Haskell}
-filter (\x -> x `mod` 2 == 0) [1,2,3,4] == [2,4]
+filter (\x -> x `mod` 2 == 0) [1,2,3,4]                         -- [2,4]
 \end{lstlisting}
 
 \end{frame}
@@ -389,14 +390,13 @@ filter (\x -> x `mod` 2 == 0) [1,2,3,4] == [2,4]
 \onslide+<3->
 Java 8:
 \begin{lstlisting}{Java}
-assertThat(Arrays.asList(1, 2, 3, 4).stream().map(x -> x + 5).toArray(), 
-    is(new Integer[]{6, 7, 8, 9}));
+Arrays.asList(1, 2, 3, 4).stream().map(x -> x + 5).toArray();                                       // new Integer[]{6, 7, 8, 9}
 \end{lstlisting}
 
 \onslide+<4->
 Haskell:
 \begin{lstlisting}{Haskell}
-map (\x -> x + 5) [1,2,3,4] == [6,7,8,9]
+map (\x -> x + 5) [1,2,3,4]                               -- [6,7,8,9]
 \end{lstlisting}
 
 \end{frame}
@@ -418,13 +418,12 @@ map (\x -> x + 5) [1,2,3,4] == [6,7,8,9]
 
 Java 8:
 \begin{lstlisting}{Java}
-assertThat(Arrays.asList(2, 3, 4, 5).stream().reduce(1, (x, y) -> x*y), 
-    is(120));
+Arrays.asList(2, 3, 4, 5).stream().reduce(1, (x, y) -> x*y);         // 120
 \end{lstlisting}
 \onslide+<4->
 Haskell:
 \begin{lstlisting}{Haskell}
-foldl	(*) 1 [2,3,4,5] == 120
+foldl	(*) 1 [2,3,4,5]                                                -- 120
 \end{lstlisting}
 
 \onslide+<3->
@@ -600,13 +599,13 @@ IntStream.rangeClosed(1, 10).map(square).reduce(0, add);      // 385
 \onslide+<2->
 Haskell:
 \begin{lstlisting}{Haskell}
-foldl	(+) 0 (map (\x -> x*x) [1..10]) == 385
+foldl	(+) 0 (map (\x -> x*x) [1..10])                         -- 385
 \end{lstlisting}
 \onslide+<3->
 \de{oder}\en{or}
 \begin{lstlisting}{Haskell}
 (>.>) x f = f x
-[1..10] >.> map (\x -> x*x) >.> foldl (+) 0 == 385
+[1..10] >.> map (\x -> x*x) >.> foldl (+) 0                   -- 385
 \end{lstlisting}
 
 \end{frame}
@@ -671,7 +670,7 @@ treeSum (Node m n) = treeSum m + treeSum n
 \end{lstlisting}
 \onslide+<6->
 \begin{lstlisting}{Haskell}
-treeSum myTree == 15
+treeSum myTree                                -- 15
 \end{lstlisting}
 \end{frame}
 
