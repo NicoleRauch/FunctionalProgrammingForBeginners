@@ -21,18 +21,21 @@
 
 \newenvironment{jsblock}{\ifjs}{\fi}
 
-\detrue % Enables German Language texts
-%\entrue % Enables English Language texts
+% Enables German or English Language texts
+\detrue 
+%\entrue
+% Enables JavaScript or Java 8
 %\jstrue
 \javatrue
 
 \AtBeginPart{\frame{\partpage}}
 
 \author{Nicole Rauch}
-\title{\de{Jetzt funkt's!}\en{The Joy of Functional Programming}}
+\js{\title{\de{Jetzt funkt's!}\en{The Joy of Functional Programming}}}
+\java{\title{\de{Funktioniert's?}\en{The Joy of Functional Programming}}}
 \subtitle{\de{Funktionale Programmierung für Anfänger}\en{~}}
 \institute{\de{Softwareentwicklung und Entwicklungscoaching}\en{Software Development and Development Coaching}}
-\date{21. Mai 2015}
+\date{9. Juli 2015}
 
 \usepackage{ngerman}
 %\usepackage[utf8x,utf8]{inputenc}

@@ -369,24 +369,54 @@ foldl	(*) 1 [2,3,4,5] == 120
 \item \de{Leichtgewichtige Verwendung dank Typinferenz}\en{Lightweight usage thanks to type inference}
 \item \de{Herleitung des allgemeinst möglichen Typs}\en{Derivation of the most general type}
 \end{itemize}
+\end{frame}
 
-\onslide+<2->
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{\de{Typinferenz}\en{Type inference}}
+
+Was ist der Typ von
 \begin{lstlisting}{Haskell}
-foldl :: (a -> b -> a) -> a -> [b] -> a
-(*) :: Num a => a -> a -> a
-
 foldl	(*) 1 [2,3,4,5]
 \end{lstlisting}
 
-\vfill
+\onslide+<2->
+\[
+\mbox{foldl} :: 
+\onslide*<2>{(a \rightarrow b \rightarrow a)}\onslide*<3->{\underbrace{(a \rightarrow b \rightarrow a)}_{\mbox{Funktion}}} 
+\rightarrow 
+\onslide*<2-3>{a}\onslide*<4->{\underbrace{a}_{\mbox{Startwert}}}
+\rightarrow 
+\onslide*<2-4>{[b]}\onslide*<5->{\underbrace{[b]}_{\mbox{Liste}}}
+\rightarrow 
+\onslide*<2-5>{a}\onslide*<6->{\underbrace{a}_{\mbox{Rückgabewert}}}
+\]
 
-\onslide*<3>{
+\onslide*<7>{
   \begin{center}
     \includegraphics[width=.7\framewidth]{fold_2.png}
   \end{center}
 }
 
-\onslide+<4->
+
+\[
+\onslide*<8->{(*) :: }
+\onslide*<8>{\mbox{Num } a \Rightarrow a \rightarrow a \rightarrow a}
+\onslide*<9->{\underbrace{\mbox{Num }a}_{\mbox{Bedingung}} \Rightarrow \underbrace{a}_{\mbox{1. Arg}} \rightarrow \underbrace{a}_{\mbox{2. Arg}} \rightarrow \underbrace{a}_{\mbox{Rückgabe}}
+}
+\]
+
+\[
+\onslide*<10->{
+\mbox{foldl} :: 
+\mbox{Num } a \Rightarrow (a \rightarrow a \rightarrow a) \rightarrow a \rightarrow [a] \rightarrow a
+}
+\]
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]{\de{Typinferenz}\en{Type inference}}
+
 \de{Compilerfehler für}\en{Compile error for}:
 \begin{lstlisting}{Haskell}
 foldl	(*) "x" [2,3,4,5]
@@ -580,6 +610,7 @@ treeSum myTree == 15
 \begin{itemize}
 \item \de{Funktionale Programmierung ist verbreiteter als man denkt}\en{Functional programming is more common than you may have expected}
 % \item Java 8 \de{hat funktionale Neuerungen}\en{has new functional features}
+\item Manches lässt sich in den nicht-funktionalen Alltag integrieren
 \item \de{Viele Sprachen bringen funktionale Aspekte oder Zusatzmodule mit}\en{Many languages have functional aspects or additional modules}
 \end{itemize}
 
