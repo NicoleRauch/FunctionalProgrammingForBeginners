@@ -119,7 +119,14 @@ Immutability
 \end{itemize}
 
 \begin{lstlisting}{Java}
-class Point {  private int x, y;  public Point (int x, int y) {    this.x = x;    this.y = y;  }  // im restlichen Code werden x und y nur noch gelesen}
+class Point {
+  private int x, y;
+  public Point (int x, int y) {
+    this.x = x;
+    this.y = y;
+  }
+  // im restlichen Code werden x und y nur noch gelesen
+}
 \end{lstlisting}
 
 
@@ -172,8 +179,17 @@ Seiteneffektfreiheit
 \onslide+<2->
 \begin{lstlisting}{Java}
 class TrennungVonSeiteneffekten {
-  public void mitSeiteneffekt(){    String initialerWert = System.console().readLine();     String ergebnis = ohneSeiteneffekt(initialerWert);    System.out.println("Das Resultat: " + ergebnis);  }
-  public static String ohneSeiteneffekt(String initialerWert){    return /* Ergebnis der Funktion */ ;  }}
+
+  public void mitSeiteneffekt(){
+    String initialerWert = System.console().readLine(); 
+    String ergebnis = ohneSeiteneffekt(initialerWert);
+    System.out.println("Das Resultat: " + ergebnis);
+  }
+
+  public static String ohneSeiteneffekt(String initialerWert){
+    return /* Ergebnis der Funktion */ ;
+  }
+}
 \end{lstlisting}
 
 \end{frame}
@@ -684,5 +700,10 @@ treeSum myTree                                -- 15
                 \item[Web] \href{http://www.nicole-rauch.de}{\texttt{http://www.nicole-rauch.de}}
         \end{description}
         \end{block}
+        
+        \begin{itemize}
+	\item Artikel in der nächsten (?) Java Aktuell
+	\item Ganztägiger Workshop
+	\end{itemize}
 \end{frame}
 }

@@ -63,6 +63,8 @@
 \setbeamercolor{blockbackground}{bg=blockbackground}
 \definecolor[named]{strings}{HTML}{0000FF}
 \usepackage[final]{listings}
+\usepackage{textcomp} % for upquote in listings
+
 
 \lstset{
 	keywordstyle=,%\bfseries,%RoyalBlue
@@ -84,7 +86,8 @@
 	inputencoding=latin1,
 	emphstyle=\color{red},
 	texcl=true,
-	numbersep=0pt
+	numbersep=0pt,
+	upquote=true
 }
 
 
