@@ -360,7 +360,11 @@ times3 5                          -- 15
 \onslide+<3->
 Java 8:
 \begin{lstlisting}{Java}
-Arrays.asList(1, 2, 3, 4).stream().filter(x -> x % 2 == 0).toArray();          // new Integer[]{2, 4}
+Stream<Integer> filteredStream = 
+        asList(1, 2, 3, 4).stream().filter(x -> x % 2 == 0);
+
+filteredStream.toArray();                          // new Integer[]{2, 4}
+filteredStream.collect(Collectors.toList());       // Liste mit 2 und 4
 \end{lstlisting}
 
 \onslide+<4->
@@ -572,24 +576,19 @@ Integer sum = squaredSequence.reduce(0, add);
 \begin{frame}[fragile]{\de{Zusammensetzen der Komponenten}\en{Combining the components}}
 Java 8:
 \begin{lstlisting}{Java}
-IntUnaryOperator square = x -> x*x;
-IntBinaryOperator add = (x,y) -> x+y;
-\end{lstlisting}
-
-\begin{lstlisting}{Java}
-IntStream.rangeClosed(1, 10).map(square).reduce(0, add);      // 385
+IntStream.rangeClosed(1, 10).map(x -> x*x).reduce(0, (x,y) -> x+y);  // 385
 \end{lstlisting}
 
 \onslide+<2->
 Haskell:
 \begin{lstlisting}{Haskell}
-foldl	(+) 0 (map (\x -> x*x) [1..10])                         -- 385
+foldl (+) 0 (map (\x -> x*x) [1..10])                                -- 385
 \end{lstlisting}
 \onslide+<3->
 \de{oder}\en{or}
 \begin{lstlisting}{Haskell}
 (>.>) x f = f x
-[1..10] >.> map (\x -> x*x) >.> foldl (+) 0                   -- 385
+[1..10] >.> map (\x -> x*x) >.> foldl (+) 0                          -- 385
 \end{lstlisting}
 
 \end{frame}

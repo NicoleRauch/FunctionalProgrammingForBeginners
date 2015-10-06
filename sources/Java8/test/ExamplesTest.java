@@ -4,12 +4,13 @@ import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
+import java.util.List;
 import java.util.function.IntBinaryOperator;
 import java.util.function.IntUnaryOperator;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.Matcher;
 import org.junit.Test;
 
 
@@ -61,7 +62,12 @@ public class ExamplesTest {
 	
 	@Test
 	public void filter() {
-		assertThat(asList(1, 2, 3, 4).stream().filter(x -> x % 2 == 0).toArray(), is(new Integer[]{2, 4}));
+		Stream<Integer> filteredStream = asList(1, 2, 3, 4).stream().filter(x -> x % 2 == 0);
+		assertThat(filteredStream.toArray(), is(new Integer[]{2, 4}));
+		List<Integer> resultat = filteredStream.collect(Collectors.toList());
+		assertThat(resultat.get(0), is(2));
+		assertThat(resultat.get(1), is(4));
+		assertThat(resultat.size(), is(2));
 	}
 	
 	@Test
