@@ -112,10 +112,10 @@ Immutability
 \en{Each variable can only be assigned to once}
 
 \onslide+<4->
-\item \de{In Java nicht direkt unterstützt}
+\item \de{In Java nicht direkt unterstützt} \en{Not directly supported in Java}
 
 \onslide+<5->
-\item \de{Kann trotzdem leicht verwirklicht werden:}
+\item \de{Kann trotzdem leicht verwirklicht werden:} \en{Can easily be put into effect:}
 \end{itemize}
 
 \begin{lstlisting}{Java}
@@ -125,7 +125,7 @@ class Point {
     this.x = x;
     this.y = y;
   }
-  // im restlichen Code werden x und y nur noch gelesen
+  // only read x and y in the remaining code
 }
 \end{lstlisting}
 
@@ -139,25 +139,25 @@ class Point {
 
 \begin{center}
 \LARGE
-Seiteneffektfreiheit
+\de{Seiteneffektfreiheit} \en{Absence of side-effects}
 \end{center}
 
 \begin{itemize}
 \onslide+<2->
-\item \de{\glqq{}alles, was den Ablauf eines Computerprogramms oder die Außenwelt verändert, ohne von einer Funktion zurückgegeben worden zu sein\grqq{}}
+\item \de{\glqq{}alles, was den Ablauf eines Computerprogramms oder die Außenwelt verändert, ohne von einer Funktion zurückgegeben worden zu sein\grqq{}} \en{``everything that changes the execution of a computer program or the outside world without being returned from a function''}
 
 \onslide+<3->
 \begin{itemize}
-\item Ein-/Ausgabe
-\item Exceptions
-\item Logging
-\item Abhängigkeit von (externen) Konfigurationen
-\item Veränderungen des Zustands 
-\item Nichtdeterminismus (z. B. durch die Verwendung eines Zufallszahlengenerators)
+\item \de{Ein-/Ausgabe} \en{Input and output}
+\item \de{Exceptions} \en{Exceptions}
+\item \de{Logging} \en{Logging}
+\item \de{Abhängigkeit von (externen) Konfigurationen} \en{Dependency on (external) configurations}
+\item \de{Veränderungen des Zustands} \en{Change of state}
+\item \de{Nichtdeterminismus (z. B. durch die Verwendung eines Zufallszahlengenerators)} \en{Nondeterminism (e.g.~use of a random number generator)}
 \end{itemize}
 
 \onslide+<4->
-\item \de{Manche Sprachen zeigen das Vorhandensein von Seiteneffekten sogar in der Typsignatur an}
+\item \de{Manche Sprachen zeigen das Vorhandensein von Seiteneffekten sogar in der Typsignatur an} \en{Some languages even indicate side-effects in the type signature}
 
 \end{itemize}
 
@@ -169,25 +169,26 @@ Seiteneffektfreiheit
 
 \begin{center}
 \LARGE
-Seiteneffektfreiheit
+\de{Seiteneffektfreiheit} \en{Absence of side-effects}
 \end{center}
 
 \de{auch nicht direkt durch Java 8 unterstützt - Codierungsregeln helfen} 
+\en{not directly supported by Java 8 either - coding rules help}
 
 ~\\
 
 \onslide+<2->
 \begin{lstlisting}{Java}
-class TrennungVonSeiteneffekten {
+class SeparationOfSideEffects {
 
-  public void mitSeiteneffekt(){
-    String initialerWert = System.console().readLine(); 
-    String ergebnis = ohneSeiteneffekt(initialerWert);
-    System.out.println("Das Resultat: " + ergebnis);
+  public void withSideEffect(){
+    String initialValue = System.console().readLine(); 
+    String result = withoutSideEffect(initialValue);
+    System.out.println("The Result: " + result);
   }
 
-  public static String ohneSeiteneffekt(String initialerWert){
-    return /* Ergebnis der Funktion */ ;
+  public static String withoutSideEffect(String initialValue){
+    return /* function result */ ;
   }
 }
 \end{lstlisting}
@@ -214,12 +215,12 @@ class TrennungVonSeiteneffekten {
 % Unterschiedlich!!
 \begin{frame}[fragile]{\de{Funktionen sind Werte}\en{Functions are values}}
 \onslide*<2>{
-Java 8: Statische Methoden
+Java 8: \de{Statische Methoden}\en{Static Methods}
 % lstinputlisting ist erforderlich wegen onslide* !!
 \lstinputlisting[language=Java]{funktionenSindWerte1.txt}
 }
 \onslide*<3>{
-Java 8: Objektmethoden
+Java 8: \de{Objektmethoden}\en{Object methods}
 \lstinputlisting[language=Java]{funktionenSindWerte2.txt}
 }
 \onslide*<4>{
@@ -227,7 +228,7 @@ Java 8: Lambdas
 \lstinputlisting[language=Java]{funktionenSindWerte3.txt}
 }
 \onslide+<5->
-Java 8: Lambdas (mit eigenem Funktionsinterface)
+Java 8: Lambdas \de{(mit eigenem Funktionsinterface)}\en{(with self-defined function interface)}
 \begin{lstlisting}{Java}
 interface TimesFunction { int eval(int x, int y); }
 
@@ -321,7 +322,7 @@ times 3 5                                                 -- 15
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]{Currying! (\de{oder auch Schönfinkeln}\en{also known as Schönfinkeling})}
 \onslide+<2->
-\de{In manchen funktionalen Sprachen schreiben wir:}\en{In real functional languages we write:}
+\de{In manchen funktionalen Sprachen schreiben wir:}\en{In some functional languages we write:}
 \begin{lstlisting}{Haskell}
 times x y = x * y
 \end{lstlisting}
@@ -434,36 +435,36 @@ foldl	(*) 1 [2,3,4,5]                                                -- 120
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Typinferenz}
+\begin{frame}[fragile]{\de{Typinferenz}\en{Type Inference}}
 \begin{itemize}
-\item Haskell: starkes statisches Typsystem
-\item Leichtgewichtige Verwendung dank Typinferenz
-\item Herleitung des allgemeinst möglichen Typs
+\item Haskell: \de{starkes statisches Typsystem}\en{strong static type system}
+\item \de{Leichtgewichtige Verwendung dank Typinferenz}\en{Lightweight use due to type inference}
+\item \de{Herleitung des allgemeinst möglichen Typs}\en{Derives the most general type}
 \end{itemize}
 
 \onslide+<2->
 
-Beispiel:
+\de{Beispiel:}\en{Example:}
 \begin{lstlisting}{Haskell}
 f x = x
 \end{lstlisting}
 
 
 \onslide+<3->
-Typ: 
+\de{Typ:}\en{Type:}
 
 \begin{lstlisting}{Haskell}
 f :: a -> a
 \end{lstlisting}
 
-\texttt{a} : Typvariable  (vergleichbar mit Generics in Java o.~ä.)
+\texttt{a} : \de{Typvariable  (vergleichbar mit Generics in Java o.~ä.)}\en{Type variable (comparable to generics in Java etc.)}
 
-\texttt{->} Funktionstyp (Argumenttyp steht links, Ergebnistyp steht rechts)
+\texttt{->} \de{Funktionstyp (Argumenttyp steht links, Ergebnistyp steht rechts)}\en{Function type (argument type to the left, result type to the right)}
 
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Typinferenz (2)}
+\begin{frame}[fragile]{\de{Typinferenz}\en{Type Inference} (2)}
 
 
 \begin{lstlisting}{Haskell}
@@ -472,18 +473,18 @@ f x = x + 1
 
 
 \onslide+<2->
-Typ:
+\de{Typ:}\en{Type:}
 
 \begin{lstlisting}{Haskell}
 f :: Num a => a -> a
 \end{lstlisting}
 
-\texttt{Num a} : Typklasse. Einschränkung der Typvariablen \texttt{a} auf numerische Typen
+\texttt{Num a} : \de{Typklasse. Einschränkung der Typvariablen \texttt{a} auf numerische Typen}\en{Type class: Restricts the type variable \texttt{a} to numerical types}
 
 \onslide+<3->
 \vfill
 
-Empfehlung: Typsignatur stets annotieren!  Zur Überprüfung der eigenen Annahmen.
+\de{Empfehlung: Typsignatur stets annotieren!  Zur Überprüfung der eigenen Annahmen.}\en{Recommended: Always annotate type signature! Helps to validate your assumptions.}
 
 \end{frame}
 
@@ -664,7 +665,7 @@ treeSum myTree                                -- 15
 \begin{itemize}
 \item \de{Funktionale Programmierung ist verbreiteter als man denkt}\en{Functional programming is more common than you may have expected}
 % \item Java 8 \de{hat funktionale Neuerungen}\en{has new functional features}
-\item Manches lässt sich in den nicht-funktionalen Alltag integrieren
+\item \de{Manches lässt sich in den nicht-funktionalen Alltag integrieren}\en{Some of it can be integrated into non-functional coding}
 \item \de{Viele Sprachen bringen funktionale Aspekte oder Zusatzmodule mit}\en{Many languages have functional aspects or additional modules}
 \end{itemize}
 
@@ -700,9 +701,11 @@ treeSum myTree                                -- 15
         \end{description}
         \end{block}
         
+        \de{
         \begin{itemize}
 	\item Artikel in der nächsten (?) Java Aktuell
 	\item Ganztägiger Workshop
 	\end{itemize}
+	}
 \end{frame}
 }
