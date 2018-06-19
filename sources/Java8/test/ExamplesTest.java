@@ -57,7 +57,8 @@ public class ExamplesTest {
 	@Test
 	public void functionsCanBeReturnedByFunctions() {
 		FunctionFunction times = x -> { return y -> x * y; };
-		assertThat(times.eval(3).applyAsInt(5), is(15));
+		FunctionFunction times2 = x -> y -> x * y;
+		assertThat(times2.eval(3).applyAsInt(5), is(15));
 	}
 	
 	@Test

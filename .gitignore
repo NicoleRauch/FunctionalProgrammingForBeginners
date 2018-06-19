@@ -10,3 +10,4 @@ sources/.metadata
 sources/Java8/bin
 *.log
 folien.synctex.gz
+.idea

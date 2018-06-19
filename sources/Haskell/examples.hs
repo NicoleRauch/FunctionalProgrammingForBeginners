@@ -2,7 +2,7 @@ module Main
 
 where
 
-import Test.Hspec
+-- import Test.Hspec
 
 times x y = x * y
 
@@ -23,17 +23,26 @@ fibb x = fibb (x-1) + fibb (x-2)
 data Tree =
        Node Tree Tree
      | Leaf Int
+     deriving Show
 
 myTree = Node (Node (Leaf 4) (Node (Leaf 7) (Leaf 1))) (Leaf 3)
 
 treeSum (Leaf x) = x
 treeSum (Node m n) = treeSum m + treeSum n
 
+
+
+
+
 (>.>) x f = f x
 
 -- the tests from the talk
 -- here in HSpec syntax
 
+main :: IO ()
+main = print "Hello"
+
+{-
 tests :: IO ()
 tests = hspec $ do
   describe "Examples from the talk" $ do
@@ -72,3 +81,4 @@ tests = hspec $ do
 
       it "summing the leaves of a tree" $ do
          treeSum myTree `shouldBe` 15
+-}
