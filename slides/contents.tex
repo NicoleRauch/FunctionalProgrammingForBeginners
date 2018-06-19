@@ -91,8 +91,7 @@
 \draw (8.1, 2.7) node {(Java 8)};
 \onslide+<3>
 \draw (5.5, 3.0) node {\color{red}Haskell};
-\draw (8.5, 1.3) node {\js{\color{red}}(JavaScript)};
-\draw (8.1, 2.7) node {\java{\color{red}}(Java 8)};
+\draw (8.5, 1.3) node {\color{red}(JavaScript)};
 \end{tikzpicture}
 
 \end{frame}
@@ -130,8 +129,8 @@ Immutability
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]{\de{Funktionen sind Werte}\en{Functions are values}}
+
 \onslide+<2->
-\begin{jsblock}
 JavaScript:
 \begin{lstlisting}{JavaScript}
 function times(x, y) { return x * y; }
@@ -140,17 +139,7 @@ var timesVar = times;
     
 timesVar(3, 5) === 15;
 \end{lstlisting}
-\end{jsblock}
-%\java{
-Java 8:
-\begin{lstlisting}{Java}
-public interface TimesFunction { int eval(int x, int y); }
 
-TimesFunction times = (x, y) -> x * y;
-TimesFunction timesVar = times;
-assertThat(timesVar.eval(3, 5), is(15));
-\end{lstlisting}
-%}
 \onslide+<3->
 Haskell:
 \begin{lstlisting}{Haskell}
@@ -365,13 +354,7 @@ foldl	(*) 1 [2,3,4,5]
 
 \vfill
 
-\onslide*<3>{
-  \begin{center}
-    \includegraphics[width=.7\framewidth]{fold_2.png}
-  \end{center}
-}
-
-\onslide+<4->
+\onslide+<3->
 \de{Compilerfehler für}\en{Compile error for}:
 \begin{lstlisting}{Haskell}
 foldl	(*) "x" [2,3,4,5]
@@ -568,7 +551,7 @@ treeSum myTree == 15
 \begin{frame}[fragile]{\de{Fazit}\en{Bottom line}}
 \begin{itemize}
 \item \de{Funktionale Programmierung ist verbreiteter als man denkt}\en{Functional programming is more common than you may have expected}
-\item Java 8 \de{hat funktionale Neuerungen}\en{has new functional features}
+\item \de{Manches lässt sich in den nicht-funktionalen Alltag integrieren}\en{Some of it can be integrated into non-functional coding}
 \item \de{Viele Sprachen bringen funktionale Aspekte oder Zusatzmodule mit}\en{Many languages have functional aspects or additional modules}
 \end{itemize}
 
@@ -578,7 +561,7 @@ treeSum myTree == 15
 \de{Referenzen}\en{References}:
 
 \begin{itemize}
-\item \de{Funktionale JS-Bibliothek}\en{Functional JS-Library}: \url{http://lodash.com}
+\item \de{Funktionale JS-Bibliothek}\en{Functional JS-Library}: \url{http://ramdajs.com}
 \item Haskell: \url{http://www.haskell.org}
 \end{itemize}
 
